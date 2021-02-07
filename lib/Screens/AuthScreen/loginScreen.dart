@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../Themes/color/colorThemes.dart';
 
 //importing Screen
-import 'signUpScreen.dart';
+import 'signUpScreens.dart';
 
 //importing Widgets
 import '../../Widgets/arenaLogo.dart';
@@ -186,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).push(
+          Navigator.of(context).pushReplacement(
             SignUpScreen.comeToPage(),
           );
         },

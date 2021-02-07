@@ -11,10 +11,13 @@ class ArenaLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: height * .7,
-          width: height * .7,
-          child: Image.asset('assets/arenaPng.png'),
+        Hero(
+          tag: 'arenaLogo',
+          child: Container(
+            height: height * .7,
+            width: height * .7,
+            child: Image.asset('assets/arenaPng.png'),
+          ),
         ),
         Text(
           'Arena',

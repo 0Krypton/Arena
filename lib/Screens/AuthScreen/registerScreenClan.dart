@@ -76,7 +76,6 @@ class _RegisterScreenClanState extends State<RegisterScreenClan> {
       top: 10,
       left: 10,
       child: backButton(
-        context: context,
         onTap: () {
           Navigator.of(context).pop();
         },

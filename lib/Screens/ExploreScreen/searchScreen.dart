@@ -267,7 +267,6 @@ class _SearchScreenState extends State<SearchScreen>
           child: Row(
             children: [
               backButton(
-                context: context,
                 onTap: () {
                   _focusNode.unfocus();
                   Navigator.of(context).pop();

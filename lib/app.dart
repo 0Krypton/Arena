@@ -11,7 +11,8 @@ import './Controllers/Proivders/earthFlareState.dart';
 import './Controllers/Proivders/AuthProvider/auth.dart';
 import './Controllers/Proivders/ExploreScreenState/exploreScreenProvider.dart';
 import './Controllers/Proivders/UserState/userState.dart';
-import 'Controllers/Proivders/StoreScreenState/storeScreenProvider.dart';
+import './Controllers/Proivders/StoreScreenState/storeScreenProvider.dart';
+import './Controllers/Proivders/AuthProvider/registerScreenState.dart';
 
 class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<FlareState>(
           create: (context) => FlareState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => RegisterScreenState(),
         ),
         ChangeNotifierProvider<ShopScreenProvider>(
           create: (context) => ShopScreenProvider(),

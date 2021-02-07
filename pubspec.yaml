@@ -78,6 +78,9 @@ flutter:
     - family: Reglo
       fonts:
         - asset: fonts/reglo/Reglo-Bold.ttf
+    - family: PtSans
+      fonts:
+        - asset: fonts/ptsans/PTSans-Bold.ttf
     - family: Noir
       fonts:
         - asset: fonts/noir/Noir-Regular.ttf

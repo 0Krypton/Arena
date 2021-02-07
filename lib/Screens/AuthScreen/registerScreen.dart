@@ -1,40 +1,28 @@
 //importing packages
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 //importing themes
 import '../../Themes/color/colorThemes.dart';
 
-//importing Screens
-import 'registerScreenImage.dart';
-
 //importing widgets
 import '../../Widgets/arenaLogo.dart';
-import '../../Widgets/submitButton.dart';
 import '../../Widgets/textField.dart';
 import '../../Widgets/backButton.dart';
+import '../../Widgets/submitButton.dart';
 
-class SignUpScreen extends StatefulWidget {
-  static const id = 'SignUpScreen';
+//importing Screens
+import '../AuthScreen/loginScreen.dart';
 
-  static Route comeToPage() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animatio1, aniamtion2) => SignUpScreen(),
-      transitionDuration: const Duration(milliseconds: 300),
-      transitionsBuilder: (context, animation1, animation2, child) {
-        return Opacity(
-          opacity: animation1.value,
-          child: child,
-        );
-      },
-    );
-  }
+//importing Controllers
+import '../../Controllers/Proivders/AuthProvider/registerScreenState.dart';
 
+class RegisterScreen extends StatefulWidget {
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   bool _isVisible = true;
 
   @override
@@ -42,31 +30,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final size = (MediaQuery.of(context).size);
     final padding = MediaQuery.of(context).padding.top;
 
-    final height = size.height - padding;
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            height: height,
-            width: size.width,
-            child: Stack(
-              children: [
-                Column(
-                  children: [
-                    SizedBox(height: 30),
-                    _buildHeader(
-                        height: (size.height - padding) * .25,
-                        width: size.width),
-                    _buildBody(width: size.width),
-                  ],
-                ),
-                _buildBackButton(),
-              ],
-            ),
+    final height = size.height;
+    return Container(
+      height: height,
+      width: size.width,
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              SizedBox(height: 30),
+              _buildHeader(height: (size.height) * .25, width: size.width),
+              _buildBody(width: size.width),
+            ],
           ),
-        ),
+          _buildBackButton(),
+        ],
       ),
     );
   }
@@ -76,9 +54,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       top: 10,
       left: 10,
       child: backButton(
-        context: context,
         onTap: () {
-          Navigator.of(context).pop();
+          Navigator.of(context).pushReplacement(
+            LoginScreen.comeToPage(),
+          );
         },
         color: null,
       ),
@@ -170,9 +149,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       color: colorShade700,
                       shadowColor: shadowColor900,
                       onTap: () {
-                        Navigator.of(context).push(
-                          RegisterScreenImage.comeToPage(),
-                        );
+                        Provider.of<RegisterScreenState>(context, listen: false)
+                            .nextPage();
                       },
                     ),
                     SizedBox(height: 10),

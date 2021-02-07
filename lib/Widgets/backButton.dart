@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-Widget backButton({BuildContext context, Function onTap, Color color}) {
+Widget backButton({Function onTap, Color color}) {
   return GestureDetector(
     onTap: onTap,
     child: Container(

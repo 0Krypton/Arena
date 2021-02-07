@@ -2,6 +2,10 @@
 import 'package:ArenaScrims/Widgets/backButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+
+//importing Controllers
+import '../../Controllers/Proivders/AuthProvider/registerScreenState.dart';
 
 //importing Screen
 import 'registerScreenRegion.dart';
@@ -14,46 +18,27 @@ import '../../Widgets/gameContainer.dart';
 import '../../Widgets/submitButton.dart';
 
 class RegisterScreenGame extends StatelessWidget {
-  static const id = 'RegisterScreenGame';
-
-  static Route comeToPage() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animatio1, aniamtion2) => RegisterScreenGame(),
-      transitionDuration: const Duration(milliseconds: 300),
-      transitionsBuilder: (context, animation1, animation2, child) {
-        return Opacity(
-          opacity: animation1.value,
-          child: child,
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final size = (MediaQuery.of(context).size);
-    final padding = MediaQuery.of(context).padding.top;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                _buildHeader(
-                    height: (size.height - padding) * .4, width: size.width),
-                _buildBody(
-                  context,
-                  height: (size.height - padding) * .6,
-                  width: size.width,
-                ),
-              ],
-            ),
-            _buildBackButton(context)
-          ],
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              _buildHeader(height: size.height * .4, width: size.width),
+              _buildBody(
+                context,
+                height: size.height * .6,
+                width: size.width,
+              ),
+            ],
+          ),
         ),
-      ),
+        _buildBackButton(context)
+      ],
     );
   }
 
@@ -62,9 +47,9 @@ class RegisterScreenGame extends StatelessWidget {
       top: 10,
       left: 10,
       child: backButton(
-        context: context,
         onTap: () {
-          Navigator.of(context).pop();
+          Provider.of<RegisterScreenState>(context, listen: false)
+              .previousPage();
         },
       ),
     );
@@ -74,7 +59,6 @@ class RegisterScreenGame extends StatelessWidget {
     return Container(
       height: height,
       width: width,
-      // color: Colors.green,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -109,7 +93,6 @@ class RegisterScreenGame extends StatelessWidget {
     return Container(
       height: height,
       width: width,
-      color: Colors.white,
       child: Column(
         children: [
           Row(
@@ -173,7 +156,8 @@ class RegisterScreenGame extends StatelessWidget {
               color: colorShade700,
               shadowColor: shadowColor900,
               onTap: () {
-                Navigator.of(context).push(RegisterScreenRegion.comeToPage());
+                Provider.of<RegisterScreenState>(context, listen: false)
+                    .nextPage();
               },
             ),
           ),

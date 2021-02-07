@@ -40,10 +40,13 @@ class _SplashScreenNotLogedInState extends State<SplashScreenNotLogedIn> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          width: 150,
-          height: 150,
-          child: Image.asset('assets/arenaPng.png'),
+        Hero(
+          tag: 'arenaLogo',
+                  child: Container(
+            width: 150,
+            height: 150,
+            child: Image.asset('assets/arenaPng.png'),
+          ),
         ),
         Text(
           'Arena',

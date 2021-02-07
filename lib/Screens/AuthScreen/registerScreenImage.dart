@@ -1,12 +1,14 @@
 //importing pakages
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 //importing themes
 import '../../Themes/color/colorThemes.dart';
 
 //importing screens
 import 'registerScreenGame.dart';
+import '../../Controllers/Proivders/AuthProvider/registerScreenState.dart';
 
 //importing widgets
 import '../../Widgets/backButton.dart';
@@ -37,37 +39,30 @@ class _RegisterScreenImageState extends State<RegisterScreenImage> {
   @override
   Widget build(BuildContext context) {
     final size = (MediaQuery.of(context).size);
-    final padding = MediaQuery.of(context).padding.top;
 
-    final height = size.height - padding;
+    final height = size.height;
 
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Stack(
+    return Stack(
+      children: [
+        Container(
+          height: height,
+          width: size.width,
+          child: Column(
             children: [
-              Container(
-                height: height,
+              _buildHeader(
+                height: height * .5,
                 width: size.width,
-                child: Column(
-                  children: [
-                    _buildHeader(
-                      height: height * .5,
-                      width: size.width,
-                    ),
-                    _buildBody(
-                      height: height * .6,
-                      width: size.width,
-                      paddingfromImage: ((height * .3) * 0.8) / 2,
-                    ),
-                  ],
-                ),
               ),
-              _buildBackButton()
+              _buildBody(
+                height: height * .6,
+                width: size.width,
+                paddingfromImage: ((height * .3) * 0.8) / 2,
+              ),
             ],
           ),
         ),
-      ),
+        _buildBackButton()
+      ],
     );
   }
 
@@ -76,9 +71,9 @@ class _RegisterScreenImageState extends State<RegisterScreenImage> {
       top: 10,
       left: 10,
       child: backButton(
-        context: context,
         onTap: () {
-          Navigator.of(context).pop();
+          Provider.of<RegisterScreenState>(context, listen: false)
+              .previousPage();
         },
         color: Colors.white,
       ),
@@ -148,7 +143,7 @@ class _RegisterScreenImageState extends State<RegisterScreenImage> {
         child: Column(
           children: [
             Text(
-              'Tap to select\nProgile & BackGround Image\nof your profile',
+              'Tap to select\nProfile & BackGround Image\nof your profile',
               style: TextStyle(
                 height: 1.2,
                 color: colorShade800,
@@ -184,9 +179,8 @@ class _RegisterScreenImageState extends State<RegisterScreenImage> {
                     color: colorShade700,
                     shadowColor: shadowColor900,
                     onTap: () {
-                      Navigator.of(context).push(
-                        RegisterScreenGame.comeToPage(),
-                      );
+                      Provider.of<RegisterScreenState>(context, listen: false)
+                          .nextPage();
                     },
                   ),
                   SizedBox(height: 30),
