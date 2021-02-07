@@ -42,7 +42,7 @@ class _ToursListState extends State<ToursList> with TickerProviderStateMixin {
 
       setState(() {
         indexTopAnimatedContainer = value;
-        print(value);
+        // print(value);
       });
       // print(_tourController.offset);
     });
@@ -87,7 +87,8 @@ class _ToursListState extends State<ToursList> with TickerProviderStateMixin {
           opacity: scale,
           child: Transform(
             transform: Matrix4.identity()..scale(scale, scale),
-            alignment: index % 2 == 0 ? Alignment.topRight : Alignment.topLeft,
+            alignment:
+                index % 2 == 0 ? Alignment.bottomRight : Alignment.bottomLeft,
             child: Align(
               heightFactor: 0.8,
               alignment: Alignment.topCenter,

@@ -56,7 +56,7 @@ class _BuildSubsState extends State<BuildSubs> {
         child: Stack(
           overflow: Overflow.visible,
           children: [
-            _buildBgImage(),
+            _buildBgImage(width: MediaQuery.of(context).size.width),
             _buildImage(),
             _buildTitle(),
             _buildTiere(),
@@ -150,13 +150,18 @@ class _BuildSubsState extends State<BuildSubs> {
     );
   }
 
-  Widget _buildBgImage() {
+  Widget _buildBgImage({width}) {
     return Positioned(
-      right: 0,
-      left: -((widget.pageIndex - 1).abs()) * 10.0,
+      // right: 10,
+      left: ((widget.pageIndex - 1).abs()) * 10.0,
       top: 0,
       bottom: 0,
-      child: Image.asset(widget.subModel.bgImageUrl),
+      child: Container(
+        width: width - 100.0,
+        child: Image.asset(
+          widget.subModel.bgImageUrl,
+        ),
+      ),
     );
   }
 }

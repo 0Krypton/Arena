@@ -216,7 +216,7 @@ class TournoumentDetailPage extends StatelessWidget {
               ),
             ),
             Positioned(
-              right: 20,
+              right: 0,
               top: 15,
               bottom: 25,
               child: Container(

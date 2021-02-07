@@ -4,10 +4,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 //importing models
 import '../../Model/ProfileScreenClasses/gamesPlaying.dart';
-import '../../Model/ExploreScreenClasses/tournoumentDetail.dart';
 
 //importing Screens
 import './tournoumentsGetReady.dart';
+import './messagesScreen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({this.height, this.width});
@@ -65,26 +65,26 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildStats({width}) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 25),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Text(
-              'Stats',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontFamily: 'Reglo',
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 30.0),
+          child: Text(
+            'Stats',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+              fontFamily: 'Reglo',
             ),
           ),
-          SizedBox(height: 5),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            physics: BouncingScrollPhysics(),
+        ),
+        SizedBox(height: 5),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          physics: BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 30, right: 30),
             child: Row(
               children: List.generate(
                 listGamesPlayed.length,
@@ -112,8 +112,8 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -135,21 +135,16 @@ class HomeScreen extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              print('Go to chats');
+              Navigator.of(context).push(MessagesScreen.comeToPage());
             },
             child: Container(
-              height: 25,
-              width: 25,
+              height: 30,
+              width: 30,
               decoration: BoxDecoration(
                 color: Colors.orange,
                 shape: BoxShape.circle,
               ),
             ),
-            // SvgPicture.asset(
-            //   'assets/BottomNavigationBarIcons/search.svg',
-            //   height: 25,
-            //   width: 25,
-            // ),
           ),
         ],
       ),
