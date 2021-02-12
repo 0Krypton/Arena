@@ -1,4 +1,5 @@
 //importing packages
+import 'package:ArenaScrims/Screens/AuthScreen/loginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -43,22 +44,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final padding = MediaQuery.of(context).padding.top;
 
     final height = size.height - padding;
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            height: height,
-            width: size.width,
-            child: Consumer<RegisterScreenState>(
-              builder: (context, provider, child) {
-                return PageView(
-                  physics: NeverScrollableScrollPhysics(),
-                  controller: provider.pageController,
-                  children: provider.registerScreens,
-                );
-              },
+    final rgProvider = Provider.of<RegisterScreenState>(context, listen: false);
+    return WillPopScope(
+      onWillPop: () async {
+        if (rgProvider.currentPage == 0) {
+          Navigator.of(context).pushReplacement(LoginScreen.comeToPage());
+          return ;
+        }
+        rgProvider.previousPage();
+        return;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              height: height,
+              width: size.width,
+              child: Consumer<RegisterScreenState>(
+                builder: (context, provider, child) {
+                  return PageView(
+                    physics: NeverScrollableScrollPhysics(),
+                    controller: provider.pageController,
+                    children: provider.registerScreens,
+                  );
+                },
+              ),
             ),
           ),
         ),

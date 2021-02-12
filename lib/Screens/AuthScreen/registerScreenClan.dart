@@ -2,12 +2,16 @@
 import 'package:ArenaScrims/Widgets/textField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 //importing themes
 import '../../Themes/color/colorThemes.dart';
 
 //importing Screen
 import '../MainScreen/mainScreen.dart';
+
+//importing providers
+import '../../Controllers/Proivders/AuthProvider/registerScreenState.dart';
 
 //importing Widgets
 import '../../Widgets/backButton.dart';
@@ -77,7 +81,8 @@ class _RegisterScreenClanState extends State<RegisterScreenClan> {
       left: 10,
       child: backButton(
         onTap: () {
-          Navigator.of(context).pop();
+          Provider.of<RegisterScreenState>(context, listen: false)
+              .previousPage();
         },
       ),
     );
@@ -184,6 +189,7 @@ class _RegisterScreenClanState extends State<RegisterScreenClan> {
                       Navigator.of(context).pushReplacement(
                         MainScreen.comeToPage(),
                       );
+                      Provider.of<RegisterScreenState>(context,listen: false).setTheDefaultPage();
                     },
                   ),
                   SizedBox(height: 30),

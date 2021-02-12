@@ -10,9 +10,12 @@ import 'Screens/SplashScreen/splashScreenNotLoggedIn.dart';
 import './Controllers/Proivders/earthFlareState.dart';
 import './Controllers/Proivders/AuthProvider/auth.dart';
 import './Controllers/Proivders/ExploreScreenState/exploreScreenProvider.dart';
+import './Controllers/Proivders/ExploreScreenState/tourListProvider.dart';
 import './Controllers/Proivders/UserState/userState.dart';
 import './Controllers/Proivders/StoreScreenState/storeScreenProvider.dart';
 import './Controllers/Proivders/AuthProvider/registerScreenState.dart';
+import './Controllers/Proivders/MainScreenProvider/mainScreenState.dart';
+import './Controllers/Proivders/HomeScreenState/tourGetReadyProvider.dart';
 
 class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -33,7 +36,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ExploreScreenProvider>(
           create: (_) => ExploreScreenProvider(),
         ),
-
+        ChangeNotifierProvider<TourListProvider>(
+          create: (_) => TourListProvider(),
+        ),
+        ChangeNotifierProvider<MainScreenState>(
+          create: (_) => MainScreenState(),
+        ),
+        ChangeNotifierProvider<TourGetReadyProvider>(
+          create: (_) => TourGetReadyProvider(),
+        ),
         // ProxyProvider<Auth,UserState>(update: (_ , auth , previousUserState)=> UserState(auth:auth),),
       ],
       child: Consumer<Auth>(

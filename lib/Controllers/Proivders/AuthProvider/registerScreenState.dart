@@ -14,7 +14,6 @@ import 'dart:math' as math;
 class RegisterScreenState with ChangeNotifier {
   int _currentPage = 0;
   int get currentPage => _currentPage;
-  double _height;
 
   final List<Widget> _registerScreens = [
     RegisterScreen(),
@@ -28,6 +27,11 @@ class RegisterScreenState with ChangeNotifier {
   PageController _pageController = PageController(initialPage: 0);
   PageController get pageController => _pageController;
 
+  void setTheDefaultPage(){
+    _currentPage = 0;
+    notifyListeners();
+  }
+
   void nextPage() {
     if (_currentPage < _registerScreens.length - 1) {
       _currentPage++;
@@ -39,6 +43,7 @@ class RegisterScreenState with ChangeNotifier {
     print(currentPage);
     notifyListeners();
   }
+
 
   void previousPage() {
     if (_currentPage > 0) {

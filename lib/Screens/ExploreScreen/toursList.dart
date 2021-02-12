@@ -1,12 +1,16 @@
 //importing packages
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 //importing model data & classes
 import '../../Model/ExploreScreenClasses/tournoumentDetail.dart';
 
 //import Screen
 import './tournoumentDetailPage.dart';
+
+//importing controllers
+import '../../Controllers/Proivders/ExploreScreenState/tourListProvider.dart';
 
 //import dart files
 import 'dart:math' as math;
@@ -28,29 +32,25 @@ class _ToursListState extends State<ToursList> with TickerProviderStateMixin {
   final marginVertical = 5.0;
 
   final double heightTourContainer = 150.0;
-  double indexTopAnimatedContainer = 0;
+  TourListProvider provider;
 
   @override
   void initState() {
     super.initState();
-
+    provider = Provider.of<TourListProvider>(context, listen: false);
     _tourController.addListener(() {
       //in this paticular calculation we calculate the index of container
       //which must be animated
       double value =
           _tourController.offset / ((heightTourContainer * 80) / 100);
-
-      setState(() {
-        indexTopAnimatedContainer = value;
-        // print(value);
-      });
-      // print(_tourController.offset);
+      provider.setScale(value);
     });
   }
 
   @override
   void dispose() {
     _tourController.dispose();
+    provider.disposeValues();
     super.dispose();
   }
 
@@ -70,67 +70,110 @@ class _ToursListState extends State<ToursList> with TickerProviderStateMixin {
       itemCount: listTournoument.length,
       padding: EdgeInsets.only(top: 25, bottom: 50),
       itemBuilder: (BuildContext context, int index) {
-        double scale = 1.0;
+        return Consumer<TourListProvider>(
+          builder: (context, tourProvider, child) {
+            double scale = 1.0;
 
-        if (indexTopAnimatedContainer > 0.2) {
-          // we used 'index + 1' because first item in the list must scale
-          // if we use 'index' instead of that, then first item scale to 0 suddenly
-          scale = (index + 1) + 0.2 - indexTopAnimatedContainer;
-          if (scale < 0) {
-            scale = 0;
-          } else if (scale > 1) {
-            scale = 1;
-          }
-        }
-
-        return Opacity(
-          opacity: scale,
-          child: Transform(
-            transform: Matrix4.identity()..scale(scale, scale),
-            alignment:
-                index % 2 == 0 ? Alignment.bottomRight : Alignment.bottomLeft,
-            child: Align(
-              heightFactor: 0.8,
-              alignment: Alignment.topCenter,
-              child: Container(
-                height: heightTourContainer,
-                margin: EdgeInsets.symmetric(
-                  horizontal: marginHorizontal,
-                  vertical: marginVertical,
-                ),
-                decoration: BoxDecoration(
-                  color: listTournoument[index].colorBegin,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: listTournoument[index].primaryShadowColor,
-                      blurRadius: 20,
-                    ),
-                  ],
-                ),
-                child: Stack(
-                  overflow: Overflow.visible,
-                  children: [
-                    _getTitle(title: listTournoument[index].title),
-                    _getPlayers(tour: listTournoument[index]),
-                    _getGameMode(gameMode: listTournoument[index].gameMode),
-                    _getToDetailPageButton(
-                        context: context, tour: listTournoument[index]),
-                    _buildBgImage(
-                      index: index,
-                      imageUrl: listTournoument[index].imageUrl,
-                    ),
-                    _buildGameLogo(
-                      index: index,
-                      game: listTournoument[index].game,
-                    ),
-                  ],
+            if (tourProvider.scale > 0.2) {
+              // we used 'index + 1' because first item in the list must scale
+              // if we use 'index' instead of that, then first item scale to 0 suddenly
+              scale = (index + 1) + 0.2 - tourProvider.scale;
+              if (scale < 0) {
+                scale = 0;
+              } else if (scale > 1) {
+                scale = 1;
+              }
+            }
+            return Opacity(
+              opacity: scale,
+              child: Transform(
+                transform: Matrix4.identity()..scale(scale, scale),
+                alignment: index % 2 == 0
+                    ? Alignment.bottomRight
+                    : Alignment.bottomLeft,
+                child: Align(
+                  heightFactor: 0.8,
+                  alignment: Alignment.topCenter,
+                  child: child,
                 ),
               ),
+            );
+          },
+          child: Container(
+            height: heightTourContainer,
+            margin: EdgeInsets.symmetric(
+              horizontal: marginHorizontal,
+              vertical: marginVertical,
+            ),
+            decoration: BoxDecoration(
+              color: listTournoument[index].colorBegin,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: listTournoument[index].primaryShadowColor,
+                  blurRadius: 20,
+                ),
+              ],
+            ),
+            child: Stack(
+              overflow: Overflow.visible,
+              children: [
+                _buildPrize(
+                  prize: listTournoument[index].prize,
+                  tour: listTournoument[index],
+                ),
+                _buildBgImage(
+                  index: index,
+                  imageUrl: listTournoument[index].imageUrl,
+                ),
+                _getTitle(title: listTournoument[index].title),
+                _getPlayers(tour: listTournoument[index]),
+                _getGameMode(gameMode: listTournoument[index].gameMode),
+                _getToDetailPageButton(
+                    context: context, tour: listTournoument[index]),
+                _buildGameLogo(
+                  index: index,
+                  game: listTournoument[index].game,
+                ),
+              ],
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildPrize({prize, TournoumentDetail tour}) {
+    return Positioned(
+      top: 0,
+      bottom: 0,
+      left: 30.0,
+      child: FittedBox(
+        fit: BoxFit.fitHeight,
+        child: Text(
+          '${prize.round()}',
+          style: TextStyle(
+            fontFamily: 'PtSans',
+            // fontSize: 90,
+            fontWeight: FontWeight.w900,
+            color: tour.colorEnd,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBgImage({int index, String imageUrl}) {
+    return Positioned(
+      bottom: 0,
+      left: 50,
+      child: Container(
+        height: heightTourContainer - 10,
+        child: Image.asset(
+          imageUrl,
+          fit: BoxFit.fitHeight,
+        ),
+      ),
     );
   }
 
@@ -239,20 +282,6 @@ class _ToursListState extends State<ToursList> with TickerProviderStateMixin {
               size: 20,
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBgImage({int index, String imageUrl}) {
-    return Positioned(
-      bottom: 0,
-      left: 30,
-      child: Container(
-        height: heightTourContainer - 10,
-        child: Image.asset(
-          imageUrl,
-          fit: BoxFit.fitHeight,
         ),
       ),
     );
