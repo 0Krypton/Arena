@@ -9,6 +9,7 @@ class UserWidget extends StatelessWidget {
     @required this.user,
     @required this.widthItem,
     @required this.animation,
+    @required this.callBack,
   });
 
   final Map<String, dynamic> user;
@@ -17,12 +18,12 @@ class UserWidget extends StatelessWidget {
 
   final Animation<double> animation;
 
+  final Function callBack;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        print(user['name']);
-      },
+      onTap:callBack,
       child: ScaleTransition(
         scale: TweenSequence(
           <TweenSequenceItem<double>>[
@@ -150,17 +151,17 @@ class UserWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FittedBox(
-                child: _buildTextField(
+                child: _buildText(
                   text: '@${user['name']}',
                   fontSize: 12.0,
-                  color: colorShade900,
+                  color: Color(0xFF777777),
                 ),
               ),
               SizedBox(height: 5),
               Padding(
                 padding: const EdgeInsets.only(left: 15.0),
                 child: FittedBox(
-                  child: _buildTextField(
+                  child: _buildText(
                     text: user['name'],
                     fontSize: 15.0,
                     color: Colors.black,
@@ -174,7 +175,7 @@ class UserWidget extends StatelessWidget {
     );
   }
 
-  Text _buildTextField({String text, double fontSize, Color color}) {
+  Text _buildText({String text, double fontSize, Color color}) {
     return Text(
       text,
       style: TextStyle(

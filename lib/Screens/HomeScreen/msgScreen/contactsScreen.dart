@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 //importing widgets
-import '../../Widgets/homeScreen/messagesScreen/userWidget.dart';
+import '../../../Widgets/homeScreen/messagesScreen/userWidget.dart';
+
+//importing screens
+import './messageScreen.dart';
 
 //importing dart
 import 'dart:math' as math;
@@ -46,10 +49,10 @@ List<Map<String, dynamic>> data = [
   },
 ];
 
-class MessagesScreen extends StatefulWidget {
+class ContactsScreen extends StatefulWidget {
   static Route comeToPage() {
     return PageRouteBuilder(
-      pageBuilder: (context, animatio1, aniamtion2) => MessagesScreen(),
+      pageBuilder: (context, animatio1, aniamtion2) => ContactsScreen(),
       transitionDuration: const Duration(milliseconds: 300),
       transitionsBuilder: (context, animation1, animation2, child) {
         return Opacity(
@@ -61,10 +64,10 @@ class MessagesScreen extends StatefulWidget {
   }
 
   @override
-  _MessagesScreenState createState() => _MessagesScreenState();
+  _ContactsScreenState createState() => _ContactsScreenState();
 }
 
-class _MessagesScreenState extends State<MessagesScreen> {
+class _ContactsScreenState extends State<ContactsScreen> {
   GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   List<Map<String, dynamic>> fakeData = [];
 
@@ -78,12 +81,12 @@ class _MessagesScreenState extends State<MessagesScreen> {
           (element) {
             _listKey.currentState.insertItem(
               fakeData.length + 1,
-              duration: Duration(milliseconds: (fakeData.length * 200)),
+              duration: Duration(milliseconds: ((fakeData.length + 1) * 150)),
             );
             fakeData.add(element);
           },
         );
-        print(fakeData.length);
+        // print(fakeData.length);
       },
     );
   }
@@ -140,6 +143,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
                   widthItem: size.width - 50,
                   user: fakeData[index - 1],
                   animation: animation,
+                  callBack: () {
+                    Navigator.of(context).push(
+                      MessageScreen.comeToPage(user: fakeData[index - 1]),
+                    );
+                  },
                 );
               } else if (index == (fakeData.length + 1)) {
                 return SizedBox(height: 25);

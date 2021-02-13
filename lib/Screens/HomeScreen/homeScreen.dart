@@ -7,7 +7,7 @@ import '../../Model/ProfileScreenClasses/gamesPlaying.dart';
 
 //importing Screens
 import './tournoumentsGetReady.dart';
-import './messagesScreen.dart';
+import 'msgScreen/contactsScreen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({this.height, this.width});
@@ -135,14 +135,18 @@ class HomeScreen extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MessagesScreen.comeToPage());
+              Navigator.of(context).push(ContactsScreen.comeToPage());
             },
             child: Container(
-              height: 30,
-              width: 30,
+              height: 25,
+              width: 25,
               decoration: BoxDecoration(
-                color: Colors.orange,
+                // color: Colors.orange,
                 shape: BoxShape.circle,
+              ),
+              child: SvgPicture.asset(
+                'assets/send.svg',
+                color: Colors.black,
               ),
             ),
           ),
