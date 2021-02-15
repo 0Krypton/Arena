@@ -20,52 +20,66 @@ class ChatBox extends StatelessWidget {
     final bLBorder = isMe ? Radius.circular(0) : Radius.circular(5);
 
     final textColor = isMe ? Colors.white : Colors.black;
-    final textAlign = isMe ? TextAlign.left : TextAlign.right;
+    final textAlign = TextAlign.left;
 
-    return Row(
-      mainAxisAlignment: alignment,
-      children: [
-        isMe
-            ? _buildProfileImage(
-                imageUrl: message['imageUrl'],
-              )
-            : SizedBox(),
-        Container(
-          constraints: BoxConstraints(minWidth: 50, maxWidth: 200),
-          margin: EdgeInsets.all(5),
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          decoration: BoxDecoration(
-            color: boxColor,
-            borderRadius: BorderRadius.only(
-              bottomLeft: bLBorder,
-              topLeft: Radius.circular(5),
-              bottomRight: bRBorder,
-              topRight: Radius.circular(5),
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+      child: Row(
+        mainAxisAlignment: alignment,
+        children: [
+          // isMe
+          //     ? _buildProfileImage(
+          //         imageUrl: message['imageUrl'],
+          //       )
+          //     : SizedBox(),
+          // SizedBox(
+          //   width: 5,
+          // ),
+          Container(
+            constraints: BoxConstraints(
+              minWidth: 50,
+              maxWidth: 250,
             ),
-          ),
-          child: Text(
-            message['message'],
-            textAlign: textAlign,
-            style: TextStyle(
-              fontSize: 15,
-              fontFamily: 'Reglo',
-              color: textColor,
-            ),
-          ),
-        ),
-        isMe
-            ? SizedBox()
-            : _buildProfileImage(
-                imageUrl: message['imageUrl'],
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: boxColor,
+              borderRadius: BorderRadius.only(
+                bottomLeft: bLBorder,
+                topLeft: Radius.circular(5),
+                bottomRight: bRBorder,
+                topRight: Radius.circular(5),
               ),
-      ],
+            ),
+            child: Text(
+              message['message'],
+              softWrap: true,
+              textAlign: textAlign,
+              style: TextStyle(
+                fontSize: 15,
+                fontFamily: 'Reglo',
+                color: textColor,
+                letterSpacing: 0.5,
+                wordSpacing: 1,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          isMe
+              ? SizedBox()
+              : _buildProfileImage(
+                  imageUrl: message['imageUrl'],
+                ),
+        ],
+      ),
     );
   }
 
   Widget _buildProfileImage({String imageUrl}) {
     return Container(
-      height: 40,
-      width: 40,
+      height: 35,
+      width: 35,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(50),
         child: Image.asset(imageUrl),

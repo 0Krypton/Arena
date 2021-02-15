@@ -1,6 +1,8 @@
 //importing packages
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+//importing Screens
+import '../../Screens/HomeScreen/TourGetReady/tourChatRoom.dart';
 
 //importing ModelFiles
 import '../../Model/ExploreScreenClasses/tournoumentDetail.dart';
@@ -132,6 +134,7 @@ class _BuildHomeTourContainerState extends State<BuildHomeTourContainer> {
           child: Stack(
             overflow: Overflow.visible,
             children: [
+              _buildGameLogo(),
               _buildTourImage(),
               _buildTourTitle(),
               _buildTourGameMode(),
@@ -162,7 +165,8 @@ class _BuildHomeTourContainerState extends State<BuildHomeTourContainer> {
       right: 25,
       child: GestureDetector(
         onTap: () {
-          print(widget.tour.title);
+          Navigator.of(context)
+              .push(TourChatRoom.comeToPage(tour: widget.tour));
         },
         child: Container(
           width: 35,
@@ -220,13 +224,57 @@ class _BuildHomeTourContainerState extends State<BuildHomeTourContainer> {
     );
   }
 
+  Widget _buildGameLogo() {
+    return Positioned(
+      top: 15,
+      left: 15,
+      child: Container(
+        height: 25,
+        width: 25,
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: widget.tour.colorBegin,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: widget.tour.secondaryShadowColor,
+              blurRadius: 15,
+            ),
+          ],
+        ),
+        child: Image.asset(
+          _getGameLogo(gameName: widget.tour.game.toLowerCase()),
+        ),
+      ),
+    );
+  }
+
+  String _getGameLogo({String gameName}) {
+    switch (gameName) {
+      case 'fortnite':
+        return 'assets/game_icons/fortnite/fortniteLogoPng.png';
+        break;
+      case 'valorant':
+        return 'assets/game_icons/valorant/valorantLogoPng.png';
+        break;
+      case 'apex-legends':
+        return 'assets/game_icons/apex/apexPng.png';
+        break;
+      case 'rainbow-six':
+        return 'assets/game_icons/rainbowsix/rainbowsixLogoPng.png';
+        break;
+      default:
+    }
+    return '';
+  }
+
   Widget _buildTourImage() {
     return Positioned(
       bottom: 0,
-      left: 25,
+      left: 40,
       child: Container(
         height: widget.heightOfContainer + 20,
-        width: 100,
+        // width: 100,
         child: Image.asset(
           widget.tour.imageUrl,
           fit: BoxFit.fitHeight,

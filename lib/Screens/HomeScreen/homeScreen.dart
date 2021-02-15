@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../Model/ProfileScreenClasses/gamesPlaying.dart';
 
 //importing Screens
-import './tournoumentsGetReady.dart';
+import 'TourGetReady/tournoumentsGetReady.dart';
 import 'msgScreen/contactsScreen.dart';
 
 class HomeScreen extends StatelessWidget {

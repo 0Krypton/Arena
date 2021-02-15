@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 //importing model classes
-import '../../Model/ExploreScreenClasses/tournoumentDetail.dart';
+import '../../../Model/ExploreScreenClasses/tournoumentDetail.dart';
 
 //importing Widgets
-import '../../Widgets/homeScreen/homeScreenTourWidget.dart';
+import '../../../Widgets/homeScreen/homeScreenTourWidget.dart';
 
 //importing controllers
-import '../../Controllers/Proivders/HomeScreenState/tourGetReadyProvider.dart';
+import '../../../Controllers/Proivders/HomeScreenState/tourGetReadyProvider.dart';
 
 class GetReadyTournoumentsList extends StatefulWidget {
   GetReadyTournoumentsList({
