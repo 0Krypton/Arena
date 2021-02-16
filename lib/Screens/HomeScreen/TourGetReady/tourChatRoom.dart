@@ -1,10 +1,15 @@
 //importing packages
-import 'package:ArenaScrims/Model/ExploreScreenClasses/tournoumentDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 //importing Screens
 import './playersList.dart';
+
+//importing classes
+import '../../../Model/ExploreScreenClasses/tournoumentDetail.dart';
+
+//importing themes
+import '../../../Themes/color/colorThemes.dart';
 
 //importing widgets
 import '../../../Widgets/backButton.dart';
@@ -39,6 +44,16 @@ class _MessageScreenState extends State<TourChatRoom> {
       "imageUrl": "images/1Profile.jpg",
       'userName': 'krypton',
       'message': 'Hello 🌹💖'
+    },
+    {
+      "imageUrl": "images/1Profile.jpg",
+      'userName': 'krypton',
+      'message': 'Neque porro quisquam est qui dolorem ipsum quia '
+    },
+    {
+      "imageUrl": "images/1Profile.jpg",
+      'userName': 'krypton',
+      'message': 'dolor sit amet, consectetur, adipisci velit...'
     },
     {
       "imageUrl": "images/2Profile.jpg",
@@ -78,10 +93,24 @@ class _MessageScreenState extends State<TourChatRoom> {
       'userName': 'scorpion',
       'message': 'Lorem ipsum dolor, adipiscing elit.'
     },
+    {
+      "imageUrl": "images/3Profile.jpg",
+      'userName': 'hitman',
+      'message': 'Hi guys'
+    },
+    {
+      "imageUrl": "images/1Profile.jpg",
+      'userName': 'clix',
+      'message':
+          'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...'
+    },
   ];
 
   final textFieldHeight = 50.0;
   final textFieldMarginBottom = 20.0;
+
+  bool _showScrollToBottom = false;
+  double heightNeedToShow = 100.0;
 
   ScrollController _chatListController;
 
@@ -89,6 +118,20 @@ class _MessageScreenState extends State<TourChatRoom> {
   initState() {
     super.initState();
     _chatListController = ScrollController();
+    _chatListController.addListener(() {
+      double maxScroll = _chatListController.position.maxScrollExtent;
+      double currentScroll = _chatListController.position.pixels;
+      print(maxScroll - currentScroll);
+      if (maxScroll - currentScroll <= heightNeedToShow) {
+        setState(() {
+          _showScrollToBottom = true;
+        });
+      } else {
+        setState(() {
+          _showScrollToBottom = false;
+        });
+      }
+    });
   }
 
   @override
@@ -182,6 +225,7 @@ class _MessageScreenState extends State<TourChatRoom> {
         _buildChatList(height: height, width: width, messagesList: messages),
         _buildBottomHighlight(),
         _buildTextField(),
+        _buildAnimateToFirstButton(),
       ],
     );
   }
@@ -206,6 +250,52 @@ class _MessageScreenState extends State<TourChatRoom> {
         child: SvgPicture.asset(
           iconUrl,
           fit: BoxFit.contain,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAnimateToFirstButton() {
+    final positionBTNScrollToBottom =
+        textFieldHeight + textFieldMarginBottom + 10.0;
+    return AnimatedPositioned(
+      bottom: _showScrollToBottom
+          ? (positionBTNScrollToBottom)
+          : (-positionBTNScrollToBottom),
+      right: 30,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.bounceInOut,
+      child: GestureDetector(
+        onTap: () {
+          _chatListController.animateTo(
+            0,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.bounceInOut,
+          );
+        },
+        child: Container(
+          height: 40,
+          width: 40,
+          decoration: BoxDecoration(
+            color: colorShade700,
+            boxShadow: [
+              BoxShadow(
+                color: colorShade700,
+                blurRadius: 15,
+              ),
+            ],
+            shape: BoxShape.circle,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: RotatedBox(
+              quarterTurns: 1,
+              child: SvgPicture.asset(
+                'assets/back_button.svg',
+                color: Colors.white,
+              ),
+            ),
+          ),
         ),
       ),
     );
