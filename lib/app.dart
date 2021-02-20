@@ -13,7 +13,6 @@ import './Controllers/Proivders/ExploreScreenState/exploreScreenProvider.dart';
 import './Controllers/Proivders/ExploreScreenState/tourListProvider.dart';
 import './Controllers/Proivders/UserState/userState.dart';
 import './Controllers/Proivders/StoreScreenState/storeScreenProvider.dart';
-import './Controllers/Proivders/AuthProvider/registerScreenState.dart';
 import './Controllers/Proivders/MainScreenProvider/mainScreenState.dart';
 import './Controllers/Proivders/HomeScreenState/tourGetReadyProvider.dart';
 
@@ -23,9 +22,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<FlareState>(
           create: (context) => FlareState(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => RegisterScreenState(),
         ),
         ChangeNotifierProvider<ShopScreenProvider>(
           create: (context) => ShopScreenProvider(),

@@ -1,14 +1,12 @@
 //importing pakages
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
 //importing themes
 import '../../Themes/color/colorThemes.dart';
 
 //importing screens
 import 'registerScreenGame.dart';
-import '../../Controllers/Proivders/AuthProvider/registerScreenState.dart';
 
 //importing widgets
 import '../../Widgets/backButton.dart';
@@ -42,27 +40,36 @@ class _RegisterScreenImageState extends State<RegisterScreenImage> {
 
     final height = size.height;
 
-    return Stack(
-      children: [
-        Container(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Container(
           height: height,
           width: size.width,
-          child: Column(
+          child: Stack(
             children: [
-              _buildHeader(
-                height: height * .5,
+              Container(
+                height: height,
                 width: size.width,
+                child: Column(
+                  children: [
+                    _buildHeader(
+                      height: height * .5,
+                      width: size.width,
+                    ),
+                    _buildBody(
+                      height: height * .6,
+                      width: size.width,
+                      paddingfromImage: ((height * .3) * 0.8) / 2,
+                    ),
+                  ],
+                ),
               ),
-              _buildBody(
-                height: height * .6,
-                width: size.width,
-                paddingfromImage: ((height * .3) * 0.8) / 2,
-              ),
+              _buildBackButton()
             ],
           ),
         ),
-        _buildBackButton()
-      ],
+      ),
     );
   }
 
@@ -72,8 +79,7 @@ class _RegisterScreenImageState extends State<RegisterScreenImage> {
       left: 10,
       child: backButton(
         onTap: () {
-          Provider.of<RegisterScreenState>(context, listen: false)
-              .previousPage();
+          Navigator.of(context).pop();
         },
         color: Colors.white,
       ),
@@ -179,8 +185,9 @@ class _RegisterScreenImageState extends State<RegisterScreenImage> {
                     color: colorShade700,
                     shadowColor: shadowColor900,
                     onTap: () {
-                      Provider.of<RegisterScreenState>(context, listen: false)
-                          .nextPage();
+                      Navigator.of(context).push(
+                        RegisterScreenGame.comeToPage(),
+                      );
                     },
                   ),
                   SizedBox(height: 30),

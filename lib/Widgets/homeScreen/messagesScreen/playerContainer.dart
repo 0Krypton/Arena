@@ -1,5 +1,9 @@
 //importing packages
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+//importing themes
+import '../../../Themes/color/colorThemes.dart';
 
 class PlayerContainer extends StatelessWidget {
   PlayerContainer({
@@ -12,14 +16,8 @@ class PlayerContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rectLeft = width - (130.0 + 20);
-    final rectTop = 0.0;
-    final rectWidth = 130.0;
-    final rectHeight = 100.0;
-
-    Color containerBgColor = const Color(0xFFF5F5F5);
-    Color containerShadowColor = Colors.black.withOpacity(.25);
-    Color textColor = Colors.black;
+    Color containerBgColor = Colors.white;
+    Color containerShadowColor = const Color(0xFFECECEC);
     List<Color> linearGradientColors = [
       const Color(0xFFD5D5D5),
       const Color(0xFFD5D5D5),
@@ -28,13 +26,10 @@ class PlayerContainer extends StatelessWidget {
     Shader linearTextGradient = LinearGradient(
       colors: linearGradientColors,
     ).createShader(
-      Rect.fromLTWH(rectLeft, rectTop, rectWidth - 30, rectHeight),
+      Rect.fromLTWH(0, 0, 30, 50),
     );
 
     if (player['rank'] == 1) {
-      containerBgColor = const Color(0xFFFFFAD9);
-      containerShadowColor = const Color(0xFFEACEBE);
-      textColor = const Color(0xFFCDA857);
       linearGradientColors = [
         const Color(0xFFCDA857),
         const Color(0xFFF7EA9B),
@@ -43,12 +38,9 @@ class PlayerContainer extends StatelessWidget {
         colors: linearGradientColors,
         begin: Alignment.topLeft,
       ).createShader(
-        Rect.fromLTWH(rectLeft, rectTop, rectWidth - 30, rectHeight),
+        const Rect.fromLTWH(20, 0, 80, 100),
       );
     } else if (player['rank'] == 2) {
-      containerBgColor = const Color(0xFFECECEC);
-      containerShadowColor = const Color(0xFFC2C2C2);
-      textColor = const Color(0xFF989898);
       linearGradientColors = [
         const Color(0xFF979797),
         const Color(0xFFD9D9D9),
@@ -57,12 +49,9 @@ class PlayerContainer extends StatelessWidget {
         colors: linearGradientColors,
         begin: Alignment.topLeft,
       ).createShader(
-        Rect.fromLTWH(rectLeft, rectTop, rectWidth - 20, rectHeight),
+        const Rect.fromLTWH(20, 0, 80, 100),
       );
     } else if (player['rank'] == 3) {
-      containerBgColor = const Color(0xFFEAD4CC);
-      containerShadowColor = const Color(0xFFD3BFB7);
-      textColor = const Color(0xFF92553F);
       linearGradientColors = [
         const Color(0xFF91533E),
         const Color(0xFFEDD0B0),
@@ -71,91 +60,167 @@ class PlayerContainer extends StatelessWidget {
         colors: linearGradientColors,
         begin: Alignment.topLeft,
       ).createShader(
-        Rect.fromLTWH(rectLeft, rectTop, rectWidth, rectHeight),
+        const Rect.fromLTWH(20, 0, 80, 100),
       );
     }
 
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      height: 100,
-      width: width,
-      decoration: BoxDecoration(
-        color: containerBgColor,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        boxShadow: [
-          BoxShadow(color: containerShadowColor, blurRadius: 20),
-        ],
-      ),
-      child: Stack(
-        overflow: Overflow.visible,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Row(
         children: [
-          Positioned(
-            top: 0,
-            bottom: 0,
-            left: 20,
-            child: Row(
-              children: [
-                Stack(
-                  overflow: Overflow.visible,
-                  children: [
-                    _buildProfileImage(),
-                    (player['clanImage'] != '')
-                        ? _buildClanImage()
-                        : SizedBox(),
-                  ],
-                ),
-                SizedBox(width: 15),
-                Text(
-                  player['userName'],
-                  style: TextStyle(
-                    color: textColor,
-                    fontSize: 18,
-                    fontFamily: 'Reglo',
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            right: 20,
-            top: 15,
-            child: Container(
-              height: 100,
+          Expanded(
+            flex: 1,
+            child: FittedBox(
+              fit: BoxFit.fitWidth,
               child: Text(
                 '#${player["rank"]}',
                 style: TextStyle(
-                  fontSize: 100,
+                  fontSize: 50,
                   fontFamily: 'Luckiest',
                   foreground: Paint()..shader = linearTextGradient,
                 ),
               ),
             ),
-          )
+          ),
+          Expanded(
+            flex: 6,
+            child: Container(
+              margin: EdgeInsets.only(left: 25, top: 15, bottom: 15, right: 15),
+              height: 100,
+              decoration: BoxDecoration(
+                color: containerBgColor,
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(color: containerShadowColor, blurRadius: 20),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: 25),
+                  _buildImages(
+                    profileImg: player['profileImage'],
+                    clanImg: player['clanImage'],
+                  ),
+                  SizedBox(width: 20),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        player['userName'],
+                        style: TextStyle(
+                          fontFamily: 'Reglo',
+                          fontSize: 15,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        player['clan'],
+                        style: TextStyle(
+                          fontFamily: 'Reglo',
+                          fontSize: 12,
+                          color: const Color(0xFF939191),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Spacer(),
+                  Row(
+                    children: [
+                      _buildStatColumn(
+                        color: const Color(0xFFB87E00),
+                        title: 'Wins',
+                        value: '${player['wins']}',
+                        iconUrl: 'assets/crown.svg',
+                      ),
+                      SizedBox(width: 15),
+                      _buildStatColumn(
+                        color: const Color(0xFF8C0000),
+                        title: 'Kills',
+                        value: '${player['kills']}',
+                        iconUrl: 'assets/skull.svg',
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 20),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildClanImage() {
+  Widget _buildImages({profileImg, clanImg}) {
+    return Stack(
+      overflow: Overflow.visible,
+      children: [
+        _buildProfileImage(profileImg: profileImg),
+        (clanImg != '') ? _buildClanImage(clanImg: clanImg) : SizedBox(),
+      ],
+    );
+  }
+
+  Widget _buildStatColumn({
+    Color color,
+    String iconUrl,
+    String title,
+    String value,
+  }) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SvgPicture.asset(
+          iconUrl,
+          height: 25,
+          width: 25,
+          color: color,
+        ),
+        const SizedBox(height: 5),
+        Text(
+          title,
+          style: TextStyle(
+            color: color,
+            fontFamily: 'Reglo',
+            fontSize: 15,
+          ),
+        ),
+        const SizedBox(height: 3),
+        Text(
+          value,
+          style: TextStyle(
+            color: color,
+            fontFamily: 'Reglo',
+            fontSize: 15,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildClanImage({String clanImg}) {
     return Positioned(
       bottom: -(20 / 4),
       right: 0,
       child: Container(
-        height: 20,
-        width: 20,
+        height: 25,
+        width: 25,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black,
-              blurRadius: 15,
+              color: Colors.grey,
+              blurRadius: 10,
             ),
           ],
         ),
         child: ClipRRect(
           child: Image.asset(
-            player['clanImage'],
+            clanImg,
             fit: BoxFit.contain,
           ),
         ),
@@ -163,17 +228,27 @@ class PlayerContainer extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileImage() {
+  Widget _buildProfileImage({String profileImg}) {
     return Container(
-      height: 50,
-      width: 50,
+      height: 55,
+      width: 55,
+      padding: EdgeInsets.all(3),
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+        color: Colors.grey,
       ),
-      child: ClipRRect(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
+        ),
         child: Image.asset(
-          player['profileImage'],
+          profileImg,
+          fit: BoxFit.contain,
         ),
       ),
     );

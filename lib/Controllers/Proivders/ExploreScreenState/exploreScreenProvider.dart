@@ -11,7 +11,7 @@ import '../../../Themes/color/colorThemes.dart';
 class ExploreScreenProvider extends ChangeNotifier {
   //OrderBy
   List<String> _orderByRegion = [];
-  List<String> _orderByGame = [];
+  List<String> _orderByGame = ['Fortnite'];
   //Variable Decleration
   List<Map<String, dynamic>> _regionServers = [
     <String, dynamic>{
@@ -54,10 +54,10 @@ class ExploreScreenProvider extends ChangeNotifier {
     <String, dynamic>{
       'name': 'Fortnite',
       'image-url': 'assets/game_icons/fortnite/fortniteLogoPng.png',
-      'isSelected': false,
+      'isSelected': true,
       'color': fortniteColor,
       'color-begin': Color(0xFF0096D9),
-      'color-end': Color(0xFF007eb7),
+      'color-end': Color(0xFF014564),
       'shadow-begin': Color(0xFF0085c1),
       'shadow-end': Color(0xFF0096d5),
     },
@@ -66,8 +66,8 @@ class ExploreScreenProvider extends ChangeNotifier {
       'image-url': 'assets/game_icons/apex/apexPng.png',
       'isSelected': false,
       'color': apexlegendsColor,
-      'color-begin': Color(0xFF8f0000),
-      'color-end': Color(0xFF790000),
+      'color-begin': Color(0xFFC00000),
+      'color-end': Color(0xFF250000),
       'shadow-begin': Color(0xFF7f0000),
       'shadow-end': Color(0xFF8d0000),
     },
@@ -76,8 +76,8 @@ class ExploreScreenProvider extends ChangeNotifier {
       'image-url': 'assets/game_icons/valorant/valorantLogoPng.png',
       'isSelected': false,
       'color': valorantColor,
-      'color-begin': Color(0xFFff495a),
-      'color-end': Color(0xFFe63d4c),
+      'color-begin': Color(0xFFFF4454),
+      'color-end': Color(0xFF7A000A),
       'shadow-begin': Color(0xFFf24150),
       'shadow-end': Color(0xFFff4758),
     },
@@ -86,8 +86,8 @@ class ExploreScreenProvider extends ChangeNotifier {
       'image-url': 'assets/game_icons/rainbowsix/rainbowsixLogoPng.png',
       'isSelected': false,
       'color': rainbowsixColor,
-      'color-begin': Color(0xFF4a4a4a),
-      'color-end': Color(0xFF3e3e3e),
+      'color-begin': Color(0xFF898989),
+      'color-end': Color(0xFF000000),
       'shadow-begin': Color(0xFF424242),
       'shadow-end': Color(0xFF484848),
     },
@@ -106,10 +106,14 @@ class ExploreScreenProvider extends ChangeNotifier {
   // Region Order Changing
   void changeRegionOrder(int index) {
     Map<String, dynamic> region = _regionServers[index];
-    region['isSelected'] = !region['isSelected'];
+    _regionServers.forEach((reg) {
+      reg['isSelected'] = false;
+    });
+    _orderByRegion = [];
 
     if (!_orderByRegion.contains(region['name'])) {
       _orderByRegion.add(region['name']);
+      region['isSelected'] = !region['isSelected'];
     } else {
       _orderByRegion.removeWhere((regionName) => regionName == region['name']);
     }
@@ -121,10 +125,12 @@ class ExploreScreenProvider extends ChangeNotifier {
   // Games Order Changing
   void changeGameOrder(int index) {
     Map<String, dynamic> game = _availableGames[index];
-    game['isSelected'] = !game['isSelected'];
+    _availableGames.forEach((g) => g['isSelected'] = false);
+    _orderByGame = [];
 
     if (!_orderByGame.contains(game['name'])) {
       _orderByGame.add(game['name']);
+      game['isSelected'] = !game['isSelected'];
     } else {
       _orderByGame.removeWhere((gameName) => gameName == game['name']);
     }

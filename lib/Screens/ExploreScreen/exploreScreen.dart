@@ -157,7 +157,6 @@ class ExploreScreen extends StatelessWidget {
                     margin:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
-                      // shape: BoxShape.circle,
                       borderRadius: BorderRadius.circular(20),
                       color: listGamesAvailable[index]['isSelected']
                           ? listGamesAvailable[index]['color']

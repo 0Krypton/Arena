@@ -1,5 +1,6 @@
 //importing external packages
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 //import external Screen
@@ -96,50 +97,62 @@ class _MainScreenState extends State<MainScreen>
       SettingsScreen(menuCallBack: runAnimation),
     ];
 
-    return SafeArea(
-      child: Consumer<MainScreenState>(
-        builder: (context, homeState, child) {
-          return AnimatedBuilder(
-            animation: _animationController.drive(
-              CurveTween(curve: Curves.ease),
-            ),
-            builder: (context, _) {
-              return Container(
-                child: Stack(
-                  children: [
-                    SlideMenu(
-                      width: media.size.width,
-                      height: media.size.height,
-                      callBack: runAnimation,
-                    ),
-                    Transform(
-                      transform: Matrix4.identity()
-                        ..translate(
-                          homeState.translateSlideX,
-                          homeState.translateSlideY,
-                        )
-                        ..scale(homeState.scale),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: mainScaffoldsShadowColor
-                                  .withOpacity(_animationController.value),
-                              blurRadius: 30,
-                              spreadRadius: 15,
-                            ),
-                          ],
-                        ),
-                        child: navBarPages[homeState.selectedPageIndex],
+    return WillPopScope(
+      onWillPop: () async {
+        if (_animationController.isCompleted) {
+          _animationController.reverse();
+        } else if (provider.selectedBtnIndex != 2) {
+          provider.setBtnIndex(2);
+        } else {
+          await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        }
+        return;
+      },
+      child: SafeArea(
+        child: Consumer<MainScreenState>(
+          builder: (context, homeState, child) {
+            return AnimatedBuilder(
+              animation: _animationController.drive(
+                CurveTween(curve: Curves.ease),
+              ),
+              builder: (context, _) {
+                return Container(
+                  child: Stack(
+                    children: [
+                      SlideMenu(
+                        width: media.size.width,
+                        height: media.size.height,
+                        callBack: runAnimation,
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-        },
+                      Transform(
+                        transform: Matrix4.identity()
+                          ..translate(
+                            homeState.translateSlideX,
+                            homeState.translateSlideY,
+                          )
+                          ..scale(homeState.scale),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: mainScaffoldsShadowColor
+                                    .withOpacity(_animationController.value),
+                                blurRadius: 30,
+                                spreadRadius: 15,
+                              ),
+                            ],
+                          ),
+                          child: navBarPages[homeState.selectedPageIndex],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

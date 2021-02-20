@@ -11,44 +11,6 @@ import './messageScreen.dart';
 //importing dart
 import 'dart:math' as math;
 
-List<Map<String, dynamic>> data = [
-  {
-    'name': 'User1',
-    'profileImage': 'images/1Profile.jpg',
-    'bgImage': 'images/1Bg.jpg',
-  },
-  {
-    'name': 'User2',
-    'profileImage': 'images/2Profile.jpg',
-    'bgImage': 'images/2Bg.jpg',
-  },
-  {
-    'name': 'User3',
-    'profileImage': 'images/3Profile.jpg',
-    'bgImage': 'images/3Bg.jpg',
-  },
-  {
-    'name': 'User4',
-    'profileImage': 'images/4Profile.jpg',
-    'bgImage': 'images/4Bg.jpg',
-  },
-  {
-    'name': 'User5',
-    'profileImage': 'images/5Profile.jpg',
-    'bgImage': 'images/5Bg.jpg',
-  },
-  {
-    'name': 'User2',
-    'profileImage': 'images/2Profile.jpg',
-    'bgImage': 'images/2Bg.jpg',
-  },
-  {
-    'name': 'User3',
-    'profileImage': 'images/3Profile.jpg',
-    'bgImage': 'images/3Bg.jpg',
-  },
-];
-
 class ContactsScreen extends StatefulWidget {
   static Route comeToPage() {
     return PageRouteBuilder(
@@ -70,10 +32,66 @@ class ContactsScreen extends StatefulWidget {
 class _ContactsScreenState extends State<ContactsScreen> {
   GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   List<Map<String, dynamic>> fakeData = [];
+  List<Map<String, dynamic>> data = [];
 
   @override
   void initState() {
     super.initState();
+
+    data = [
+      {
+        'name': 'User1',
+        'profileImage': 'images/1Profile.jpg',
+        'bgImage': 'images/1Bg.jpg',
+        "message": ['hello', 'how are you? do u wanna play game?!'],
+        "lastMessageSent": DateTime.now().millisecondsSinceEpoch,
+      },
+      {
+        'name': 'User2',
+        'profileImage': 'images/2Profile.jpg',
+        'bgImage': 'images/2Bg.jpg',
+        "message": ['hello', 'how are you? do u wanna play game?!'],
+        "lastMessageSent": DateTime.now().millisecondsSinceEpoch,
+        "unreadMessages": 1,
+      },
+      {
+        'name': 'User3',
+        'profileImage': 'images/3Profile.jpg',
+        'bgImage': 'images/3Bg.jpg',
+        "message": ['hello', 'how are you? do u wanna play game?!'],
+        "lastMessageSent": DateTime.now().millisecondsSinceEpoch,
+        "unreadMessages": 11,
+      },
+      {
+        'name': 'User4',
+        'profileImage': 'images/4Profile.jpg',
+        'bgImage': 'images/4Bg.jpg',
+        "message": ['hello', 'how are you? do u wanna play game?!'],
+        "lastMessageSent": DateTime.now().millisecondsSinceEpoch,
+        "unreadMessages": 99,
+      },
+      {
+        'name': 'User5',
+        'profileImage': 'images/5Profile.jpg',
+        'bgImage': 'images/5Bg.jpg',
+        "message": ['hello', 'how are you? do u wanna play game?!'],
+        "lastMessageSent": DateTime.now().millisecondsSinceEpoch,
+      },
+      {
+        'name': 'User2',
+        'profileImage': 'images/2Profile.jpg',
+        'bgImage': 'images/2Bg.jpg',
+        "message": ['hello', 'how are you? do u wanna play game?!'],
+        "lastMessageSent": DateTime.now().millisecondsSinceEpoch,
+      },
+      {
+        'name': 'User3',
+        'profileImage': 'images/3Profile.jpg',
+        'bgImage': 'images/3Bg.jpg',
+        "message": ['hello', 'how are you? do u wanna play game?!'],
+        "lastMessageSent": DateTime.now().millisecondsSinceEpoch,
+      },
+    ];
     Future.delayed(
       Duration(milliseconds: 500),
       () {
@@ -94,6 +112,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
   @override
   void dispose() {
     fakeData = [];
+    data = [];
     _listKey = null;
     super.dispose();
   }

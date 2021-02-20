@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 //importing theme
 import '../../../Themes/color/colorThemes.dart';
 
-class UserWidget extends StatelessWidget {
+//importing Utils
+import '../../../Utils/getTimeDiffInString.dart';
+
+class UserWidget extends StatelessWidget with TimeDiffInString {
   UserWidget({
     @required this.user,
     @required this.widthItem,
@@ -23,13 +26,14 @@ class UserWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:callBack,
+      onTap: callBack,
       child: ScaleTransition(
         scale: TweenSequence(
           <TweenSequenceItem<double>>[
             TweenSequenceItem<double>(
-              tween: Tween<double>(begin: 0, end: 1.1)
-                  .chain(CurveTween(curve: Curves.ease)),
+              tween: Tween<double>(begin: 0, end: 1.1).chain(
+                CurveTween(curve: Curves.ease),
+              ),
               weight: 40.0,
             ),
             TweenSequenceItem<double>(
@@ -37,8 +41,9 @@ class UserWidget extends StatelessWidget {
               weight: 20.0,
             ),
             TweenSequenceItem<double>(
-              tween: Tween<double>(begin: 0.9, end: 1)
-                  .chain(CurveTween(curve: Curves.ease)),
+              tween: Tween<double>(begin: 0.9, end: 1).chain(
+                CurveTween(curve: Curves.ease),
+              ),
               weight: 40.0,
             ),
           ],
@@ -60,8 +65,17 @@ class UserWidget extends StatelessWidget {
           child: Stack(
             children: [
               _buildBgImage(),
-              _buildProfileImage(),
-              _buildBody(),
+              Container(
+                height: 80,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _buildProfileImage(),
+                    _buildBody(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -97,83 +111,162 @@ class UserWidget extends StatelessWidget {
   }
 
   Widget _buildProfileImage() {
-    return Positioned(
-      top: 40,
-      left: 40,
-      child: Transform.translate(
-        offset: Offset(0, -25.0),
-        child: Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.white, width: 2),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.6),
-                blurRadius: 15,
+    return Container(
+      width: 50,
+      height: 50,
+      margin: EdgeInsets.only(left: 25, right: 15),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 2),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.6),
+            blurRadius: 15,
+          ),
+        ],
+        image: DecorationImage(
+          image: AssetImage(
+            user['profileImage'],
+          ),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child:
+          user['unreadMessages'] == null ? SizedBox() : _buildUnreadMessages(),
+    );
+  }
+
+  Widget _buildUnreadMessages() {
+    Color bgContainerColor = colorShade700;
+    if (user['unreadMessages'] >= 50) {
+      bgContainerColor = const Color(0xFFC00000);
+    } else if (user['unreadMessages'] >= 10 && user['unreadMessages'] < 50) {
+      bgContainerColor = const Color(0xFF0097D2);
+    }
+    return Stack(
+      overflow: Overflow.visible,
+      children: [
+        Positioned(
+          right: -5,
+          bottom: -5,
+          child: Container(
+            height: 20,
+            width: 20,
+            padding: EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: bgContainerColor,
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: FittedBox(
+                child: Text(
+                  '${user['unreadMessages']}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Reglo',
+                  ),
+                ),
               ),
-            ],
-            image: DecorationImage(
-              image: AssetImage(
-                user['profileImage'],
-              ),
-              fit: BoxFit.cover,
             ),
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBody() {
+    return Expanded(
+      child: Container(
+        margin: EdgeInsets.only(top: 15, bottom: 15, right: 30),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(
+          color: Color(0xFFF2F2F2),
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.25),
+              blurRadius: 15,
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildText(
+                  text: '${user['name']}',
+                  fontSize: 12.0,
+                  color: colorShade900,
+                ),
+                _buildText(
+                  text: getTime(user['lastMessageSent']),
+                  fontSize: 10.0,
+                  color: Colors.grey,
+                ),
+              ],
+            ),
+            SizedBox(height: 5),
+            Row(
+              children: [
+                FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: _buildText(
+                    text:
+                        'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...'
+                                .trim()
+                                .substring(0, 30)
+                                .toString() +
+                            '...',
+                    color: Colors.black,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildBody() {
-    return Positioned(
-      top: 40,
-      left: widthItem * .6,
-      child: Transform.translate(
-        offset: Offset(-((widthItem * .4) / 2), -((80 - 30.0) / 2)),
-        child: Container(
-          height: (80 - (30.0)),
-          width: widthItem * .4,
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          decoration: BoxDecoration(
-            color: Color(0xFFF2F2F2),
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.25),
-                blurRadius: 15,
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FittedBox(
-                child: _buildText(
-                  text: '@${user['name']}',
-                  fontSize: 12.0,
-                  color: Color(0xFF777777),
-                ),
-              ),
-              SizedBox(height: 5),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: FittedBox(
-                  child: _buildText(
-                    text: user['name'],
-                    fontSize: 15.0,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // String getTimeText() {
+  //   DateTime now = new DateTime.now();
+  //   DateTime messageSentTime =
+  //       new DateTime.fromMillisecondsSinceEpoch(user['lastMessageSent']);
+  //   Duration diff = now.difference(messageSentTime);
+  //   int seconds = diff.inSeconds;
+  //   String message = 'a seconds ago';
+  //   double time = 0.0;
+
+  //   if (seconds > 60) {
+  //     // 1m --> 60s
+  //     time = (seconds / 60);
+  //     return '${time.toStringAsFixed(0)}m ago';
+  //   } else if (seconds >= (60 * 60)) {
+  //     // 1h --> 3600s
+  //     time = seconds / 3600;
+  //     return time == 1
+  //         ? 'one hour ago'
+  //         : '${time.toStringAsFixed(0)} hours ago';
+  //   } else if (seconds >= (60 * 60 * 24)) {
+  //     // 1d --> 86400s
+  //     time = seconds / 86400;
+  //     return time >= 1 ? 'one day ago' : '${time.toStringAsFixed(0)} days ago';
+  //   } else if (seconds >= (7 * 24 * 60 * 60)) {
+  //     // 1w --> 604800s
+  //     time = seconds / 604800;
+  //     return time < 3 ? "$time week ago" : "a weeks ago";
+  //   } else if (seconds >= (30 * 24 * 60 * 60)) {
+  //     // 1month --> 2592000s
+  //     time = seconds / 2592000;
+  //     return time == 1 ? 'a month ago' : '${time.toStringAsFixed(0)}months ago';
+  //   }
+  //   return message;
+  // }
 
   Text _buildText({String text, double fontSize, Color color}) {
     return Text(

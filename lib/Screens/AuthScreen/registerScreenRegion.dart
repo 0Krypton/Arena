@@ -8,7 +8,6 @@ import '../../Themes/color/colorThemes.dart';
 
 //importing controllers
 import '../../Controllers/Proivders/earthFlareState.dart';
-import '../../Controllers/Proivders/AuthProvider/registerScreenState.dart';
 
 //importing screens
 import 'registerScreenClan.dart';
@@ -21,6 +20,21 @@ import '../../Widgets/submitButton.dart';
 import 'dart:math' as math;
 
 class RegisterScreenRegion extends StatefulWidget {
+  static const id = 'RegisterScreenRegion';
+
+  static Route comeToPage() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animatio1, aniamtion2) => RegisterScreenRegion(),
+      transitionDuration: const Duration(milliseconds: 300),
+      transitionsBuilder: (context, animation1, animation2, child) {
+        return Opacity(
+          opacity: animation1.value,
+          child: child,
+        );
+      },
+    );
+  }
+
   static const List<String> regions = <String>[
     'NA - North America',
     'SA - South America',
@@ -74,8 +88,7 @@ class _RegisterScreenRegionState extends State<RegisterScreenRegion> {
       left: 10,
       child: backButton(
         onTap: () {
-          Provider.of<RegisterScreenState>(context, listen: false)
-              .previousPage();
+          Navigator.of(context).pop();
         },
       ),
     );
@@ -189,9 +202,7 @@ class _RegisterScreenRegionState extends State<RegisterScreenRegion> {
               color: colorShade700,
               shadowColor: shadowColor900,
               onTap: () {
-                Provider.of<RegisterScreenState>(context, listen: false)
-                    .nextPage();
-
+                Navigator.of(context).push(RegisterScreenClan.comeToPage());
                 Provider.of<FlareState>(context, listen: false).disposeClass();
               },
             ),

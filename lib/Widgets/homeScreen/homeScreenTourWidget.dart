@@ -224,6 +224,48 @@ class _BuildHomeTourContainerState extends State<BuildHomeTourContainer> {
     );
   }
 
+  // Widget _buildTourBgImage() {
+  //   bool hasBgImage = widget.tour.bgImageUrl != null;
+  //   // print(hasBgImage);
+  //   return hasBgImage
+  //       ? Positioned(
+  //           bottom: 0,
+  //           child: Container(
+  //             height: widget.heightOfContainer,
+  //             width: widget.widthOfChildContainer,
+  //             // color: Colors.black,
+  //             child: ClipRRect(
+  //               borderRadius: BorderRadius.only(
+  //                 bottomLeft: Radius.circular(15),
+  //                 bottomRight: Radius.circular(15),
+  //               ),
+  //               child: Opacity(
+  //                 opacity: 0.4,
+  //                 child: Image.asset(
+  //                   widget.tour.bgImageUrl,
+  //                   fit: BoxFit.fitWidth,
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         )
+  //       : const SizedBox();
+  // }
+
+  Widget _buildTourImage() {
+    return Positioned(
+      bottom: 0,
+      left: 40,
+      child: Container(
+        height: widget.heightOfContainer + 20,
+        child: Image.asset(
+          widget.tour.imageUrl,
+          fit: BoxFit.fitHeight,
+        ),
+      ),
+    );
+  }
+
   Widget _buildGameLogo() {
     return Positioned(
       top: 15,
@@ -266,20 +308,5 @@ class _BuildHomeTourContainerState extends State<BuildHomeTourContainer> {
       default:
     }
     return '';
-  }
-
-  Widget _buildTourImage() {
-    return Positioned(
-      bottom: 0,
-      left: 40,
-      child: Container(
-        height: widget.heightOfContainer + 20,
-        // width: 100,
-        child: Image.asset(
-          widget.tour.imageUrl,
-          fit: BoxFit.fitHeight,
-        ),
-      ),
-    );
   }
 }

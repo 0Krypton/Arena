@@ -28,24 +28,30 @@ class SubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        height: height,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.all(
-            Radius.circular(15),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: shadowColor,
-              blurRadius: 20,
+      child: Hero(
+        tag: 'register-submit',
+        child: Material(
+          type: MaterialType.transparency,
+          child: Container(
+            height: height,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: shadowColor,
+                  blurRadius: 20,
+                ),
+              ],
             ),
-          ],
-        ),
-        child: Center(
-          child: Text(
-            label,
-            style: textStyle,
+            child: Center(
+              child: Text(
+                label,
+                style: textStyle,
+              ),
+            ),
           ),
         ),
       ),

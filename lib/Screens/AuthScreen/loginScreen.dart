@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../Themes/color/colorThemes.dart';
 
 //importing Screen
-import 'signUpScreens.dart';
+import 'registerScreen.dart';
 
 //importing Widgets
 import '../../Widgets/arenaLogo.dart';
@@ -187,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).pushReplacement(
-            SignUpScreen.comeToPage(),
+            RegisterScreen.comeToPage(),
           );
         },
         child: Container(

@@ -10,9 +10,6 @@ import '../../Themes/color/colorThemes.dart';
 //importing Screen
 import '../MainScreen/mainScreen.dart';
 
-//importing providers
-import '../../Controllers/Proivders/AuthProvider/registerScreenState.dart';
-
 //importing Widgets
 import '../../Widgets/backButton.dart';
 import '../../Widgets/submitButton.dart';
@@ -81,8 +78,7 @@ class _RegisterScreenClanState extends State<RegisterScreenClan> {
       left: 10,
       child: backButton(
         onTap: () {
-          Provider.of<RegisterScreenState>(context, listen: false)
-              .previousPage();
+          Navigator.of(context).pop();
         },
       ),
     );
@@ -186,10 +182,9 @@ class _RegisterScreenClanState extends State<RegisterScreenClan> {
                     color: colorShade700,
                     shadowColor: shadowColor900,
                     onTap: () {
-                      Navigator.of(context).pushReplacement(
+                      Navigator.of(context).push(
                         MainScreen.comeToPage(),
                       );
-                      Provider.of<RegisterScreenState>(context,listen: false).setTheDefaultPage();
                     },
                   ),
                   SizedBox(height: 30),

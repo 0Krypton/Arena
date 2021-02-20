@@ -33,6 +33,8 @@ class PlayersList extends StatelessWidget {
       "clan": "Sentinels",
       "profileImage": "assets/tourmembers/ply1.png",
       "clanImage": "assets/tourmembers/ply1clan.png",
+      "kills": 7,
+      "wins": 1,
     },
     {
       "userName": "Mongraal",
@@ -40,6 +42,8 @@ class PlayersList extends StatelessWidget {
       "clan": "FaZe",
       "profileImage": "assets/tourmembers/ply2.png",
       "clanImage": "assets/tourmembers/ply2clan.png",
+      "kills": 7,
+      "wins": 1,
     },
     {
       "userName": "Clix",
@@ -47,6 +51,8 @@ class PlayersList extends StatelessWidget {
       "clan": "NRG",
       "profileImage": "assets/tourmembers/ply3.png",
       "clanImage": "assets/tourmembers/ply3clan.png",
+      "kills": 7,
+      "wins": 1,
     },
     {
       "userName": "Mr Savage",
@@ -54,6 +60,8 @@ class PlayersList extends StatelessWidget {
       "clan": "100 Thieves",
       "profileImage": "assets/tourmembers/ply4.png",
       "clanImage": "assets/tourmembers/ply4clan.png",
+      "kills": 7,
+      "wins": 1,
     },
     {
       "userName": "Bugha",
@@ -61,6 +69,8 @@ class PlayersList extends StatelessWidget {
       "clan": "Sentinels",
       "profileImage": "assets/tourmembers/ply1.png",
       "clanImage": "assets/tourmembers/ply1clan.png",
+      "kills": 7,
+      "wins": 1,
     },
     {
       "userName": "Mongraal",
@@ -68,6 +78,8 @@ class PlayersList extends StatelessWidget {
       "clan": "FaZe",
       "profileImage": "assets/tourmembers/ply2.png",
       "clanImage": "assets/tourmembers/ply2clan.png",
+      "kills": 7,
+      "wins": 1,
     },
     {
       "userName": "Clix",
@@ -75,6 +87,8 @@ class PlayersList extends StatelessWidget {
       "clan": "NRG",
       "profileImage": "assets/tourmembers/ply3.png",
       "clanImage": "assets/tourmembers/ply3clan.png",
+      "kills": 7,
+      "wins": 1,
     },
     {
       "userName": "Mr Savage",
@@ -82,6 +96,8 @@ class PlayersList extends StatelessWidget {
       "clan": "100 Thieves",
       "profileImage": "assets/tourmembers/ply4.png",
       "clanImage": "assets/tourmembers/ply4clan.png",
+      "kills": 7,
+      "wins": 1,
     },
     {
       "userName": "Bugha",
@@ -89,6 +105,8 @@ class PlayersList extends StatelessWidget {
       "clan": "Sentinels",
       "profileImage": "assets/tourmembers/ply1.png",
       "clanImage": "assets/tourmembers/ply1clan.png",
+      "kills": 7,
+      "wins": 1,
     },
     {
       "userName": "Mongraal",
@@ -96,6 +114,8 @@ class PlayersList extends StatelessWidget {
       "clan": "FaZe",
       "profileImage": "assets/tourmembers/ply2.png",
       "clanImage": "assets/tourmembers/ply2clan.png",
+      "kills": 7,
+      "wins": 1,
     },
     {
       "userName": "Clix",
@@ -103,6 +123,8 @@ class PlayersList extends StatelessWidget {
       "clan": "NRG",
       "profileImage": "assets/tourmembers/ply3.png",
       "clanImage": "assets/tourmembers/ply3clan.png",
+      "kills": 7,
+      "wins": 1,
     },
     {
       "userName": "Mr Savage",
@@ -110,6 +132,8 @@ class PlayersList extends StatelessWidget {
       "clan": "100 Thieves",
       "profileImage": "assets/tourmembers/ply4.png",
       "clanImage": "assets/tourmembers/ply4clan.png",
+      "kills": 7,
+      "wins": 1,
     },
   ];
 

@@ -13,11 +13,24 @@ import '../../Widgets/submitButton.dart';
 
 //importing Screens
 import '../AuthScreen/loginScreen.dart';
-
-//importing Controllers
-import '../../Controllers/Proivders/AuthProvider/registerScreenState.dart';
+import 'registerScreenImage.dart';
 
 class RegisterScreen extends StatefulWidget {
+  static const id = 'RegisterScreen';
+
+  static Route comeToPage() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animatio1, aniamtion2) => RegisterScreen(),
+      transitionDuration: const Duration(milliseconds: 500),
+      transitionsBuilder: (context, animation1, animation2, child) {
+        return Opacity(
+          opacity: animation1.value,
+          child: child,
+        );
+      },
+    );
+  }
+
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
@@ -28,23 +41,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final size = (MediaQuery.of(context).size);
-    final padding = MediaQuery.of(context).padding.top;
 
     final height = size.height;
-    return Container(
-      height: height,
-      width: size.width,
-      child: Stack(
-        children: [
-          Column(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Container(
+          height: height,
+          width: size.width,
+          color: Colors.white,
+          child: Stack(
             children: [
-              SizedBox(height: 30),
-              _buildHeader(height: (size.height) * .25, width: size.width),
-              _buildBody(width: size.width),
+              Column(
+                children: [
+                  SizedBox(height: 30),
+                  _buildHeader(height: (size.height) * .25, width: size.width),
+                  _buildBody(width: size.width),
+                ],
+              ),
+              _buildBackButton(),
             ],
           ),
-          _buildBackButton(),
-        ],
+        ),
       ),
     );
   }
@@ -149,8 +167,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: colorShade700,
                       shadowColor: shadowColor900,
                       onTap: () {
-                        Provider.of<RegisterScreenState>(context, listen: false)
-                            .nextPage();
+                        Navigator.of(context).push(
+                          RegisterScreenImage.comeToPage(),
+                        );
                       },
                     ),
                     SizedBox(height: 10),

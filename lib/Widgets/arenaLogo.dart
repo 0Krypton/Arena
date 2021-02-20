@@ -19,13 +19,19 @@ class ArenaLogo extends StatelessWidget {
             child: Image.asset('assets/arenaPng.png'),
           ),
         ),
-        Text(
-          'Arena',
-          style: TextStyle(
-            color: colorShade800,
-            fontFamily: 'Noir',
-            fontWeight: FontWeight.w900,
-            fontSize: 20,
+        Hero(
+          tag: 'arenaTitle',
+          child: Material(
+            type: MaterialType.transparency,
+            child: Text(
+              'Arena',
+              style: TextStyle(
+                color: colorShade800,
+                fontFamily: 'Noir',
+                fontWeight: FontWeight.w900,
+                fontSize: 20,
+              ),
+            ),
           ),
         ),
       ],
