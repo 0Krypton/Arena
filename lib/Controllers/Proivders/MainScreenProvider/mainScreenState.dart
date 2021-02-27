@@ -62,22 +62,29 @@ class MainScreenState extends ChangeNotifier {
   double _translateSlideY = 0.0;
   double _scale = 1.0;
   double _animationValue = 1.0;
+  double _opacity = 1.0;
+  double _height;
 
   double get translateSlideX => _translateSlideX;
   double get translateSlideY => _translateSlideY;
   double get scale => _scale;
   double get animationValue => _animationValue;
+  double get opacity => _opacity;
+
+  void setHeight(double height) {
+    _height = ((height - (height * .8)) / 2);
+  }
 
   void setAnimationController(
     AnimationController controller,
     maxSlide,
-    height,
   ) {
     controller.addListener(() {
       _translateSlideX = maxSlide * controller.value;
-      _translateSlideY = ((height - (height * .7)) / 2) * controller.value;
-      _scale = 1 - (controller.value * 0.3);
+      _translateSlideY = _height * controller.value;
+      _scale = 1 - (controller.value * 0.2);
       _animationValue = controller.value;
+      _opacity = 1 - (controller.value);
       notifyListeners();
     });
 

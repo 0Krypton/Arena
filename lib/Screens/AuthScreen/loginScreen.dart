@@ -186,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushReplacement(
+          Navigator.of(context).push(
             RegisterScreen.comeToPage(),
           );
         },

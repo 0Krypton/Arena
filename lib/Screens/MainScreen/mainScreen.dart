@@ -19,6 +19,9 @@ import '../ActivityScreen/activityScreen.dart';
 import '../PaymentScreen/paymentScreen.dart';
 import '../SettingsScreen/settingsScreen.dart';
 
+//dart
+import 'dart:math' as math;
+
 class MainScreen extends StatefulWidget {
   static const id = 'MainScreen';
 
@@ -56,7 +59,7 @@ class _MainScreenState extends State<MainScreen>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 500),
     );
 
     print('the initState() method of the mainScreen.dart is called');
@@ -83,10 +86,12 @@ class _MainScreenState extends State<MainScreen>
     maxSlide = -(media.size.width) * .4;
 
     final provider = Provider.of<MainScreenState>(context, listen: false);
+
+    provider.setHeight(media.size.height);
+
     provider.setAnimationController(
       _animationController,
       maxSlide,
-      media.size.height,
     );
 
     navBarPages = [
@@ -109,49 +114,45 @@ class _MainScreenState extends State<MainScreen>
         return;
       },
       child: SafeArea(
-        child: Consumer<MainScreenState>(
-          builder: (context, homeState, child) {
-            return AnimatedBuilder(
-              animation: _animationController.drive(
-                CurveTween(curve: Curves.ease),
+        child: Container(
+          child: Stack(
+            children: [
+              SlideMenu(
+                width: media.size.width,
+                height: media.size.height,
+                callBack: runAnimation,
               ),
-              builder: (context, _) {
-                return Container(
-                  child: Stack(
-                    children: [
-                      SlideMenu(
-                        width: media.size.width,
-                        height: media.size.height,
-                        callBack: runAnimation,
-                      ),
-                      Transform(
-                        transform: Matrix4.identity()
-                          ..translate(
-                            homeState.translateSlideX,
-                            homeState.translateSlideY,
-                          )
-                          ..scale(homeState.scale),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: mainScaffoldsShadowColor
-                                    .withOpacity(_animationController.value),
-                                blurRadius: 30,
-                                spreadRadius: 15,
-                              ),
-                            ],
+              Consumer<MainScreenState>(
+                builder: (context, homeState, child) {
+                  return Transform(
+                    transform: Matrix4.identity()
+                      ..translate(
+                        homeState.translateSlideX,
+                        homeState.translateSlideY,
+                      )
+                      ..scale(homeState.scale),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      decoration: BoxDecoration(
+                        borderRadius: _animationController.isCompleted
+                            ? BorderRadius.circular(15)
+                            : BorderRadius.circular(0),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: mainScaffoldsShadowColor
+                                .withOpacity(_animationController.value),
+                            blurRadius: 50,
                           ),
-                          child: navBarPages[homeState.selectedPageIndex],
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
-              },
-            );
-          },
+                      child: navBarPages[homeState.selectedPageIndex],
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

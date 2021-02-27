@@ -26,7 +26,7 @@ class SlideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mainScrStateProvider =
-        Provider.of<MainScreenState>(context, listen: false);
+        Provider.of<MainScreenState>(context, listen: true);
     return Scaffold(
       body: Opacity(
         opacity: mainScrStateProvider.animationValue * 1,

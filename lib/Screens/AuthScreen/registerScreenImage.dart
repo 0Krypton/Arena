@@ -39,31 +39,24 @@ class _RegisterScreenImageState extends State<RegisterScreenImage> {
     final size = (MediaQuery.of(context).size);
 
     final height = size.height;
+    final width = size.width;
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
           height: height,
-          width: size.width,
+          width: width,
           child: Stack(
             children: [
-              Container(
-                height: height,
-                width: size.width,
-                child: Column(
-                  children: [
-                    _buildHeader(
-                      height: height * .5,
-                      width: size.width,
-                    ),
-                    _buildBody(
-                      height: height * .6,
-                      width: size.width,
-                      paddingfromImage: ((height * .3) * 0.8) / 2,
-                    ),
-                  ],
-                ),
+              _buildHeader(
+                height: height * .4,
+                width: width,
+              ),
+              _buildBody(
+                height: height * .6,
+                width: width,
+                paddingfromImage: ((height * .4) / 2) + ((width * .4) / 2) + 20,
               ),
               _buildBackButton()
             ],
@@ -88,7 +81,7 @@ class _RegisterScreenImageState extends State<RegisterScreenImage> {
 
   Widget _buildHeader({height, width}) {
     return Container(
-      height: height * .8,
+      height: height,
       width: width,
       child: Stack(
         overflow: Overflow.visible,
@@ -98,7 +91,7 @@ class _RegisterScreenImageState extends State<RegisterScreenImage> {
               print('ImageBg tapped');
             },
             child: Container(
-              height: height * .4,
+              height: height * .5,
               width: width,
               color: buttonColor,
             ),
@@ -110,8 +103,8 @@ class _RegisterScreenImageState extends State<RegisterScreenImage> {
                 print('Image tapped');
               },
               child: Container(
-                height: height * .5,
-                width: height * .5,
+                height: width * .4,
+                width: width * .4,
                 decoration: BoxDecoration(
                   color: colorShade600,
                   shape: BoxShape.circle,
@@ -138,13 +131,13 @@ class _RegisterScreenImageState extends State<RegisterScreenImage> {
   }
 
   Widget _buildBody({height, width, paddingfromImage}) {
-    final paddingTopBottom = 40.0;
+    final paddingLeftRight = 40.0;
     return Container(
       width: width,
-      // margin: EdgeInsets.only(top: paddingFromImage / 2),
+      margin: EdgeInsets.only(top: paddingfromImage),
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: paddingTopBottom,
+          horizontal: paddingLeftRight,
         ),
         child: Column(
           children: [
