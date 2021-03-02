@@ -59,7 +59,7 @@ class _MainScreenState extends State<MainScreen>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 150),
     );
 
     print('the initState() method of the mainScreen.dart is called');
@@ -114,45 +114,43 @@ class _MainScreenState extends State<MainScreen>
         return;
       },
       child: SafeArea(
-        child: Container(
-          child: Stack(
-            children: [
-              SlideMenu(
-                width: media.size.width,
-                height: media.size.height,
-                callBack: runAnimation,
-              ),
-              Consumer<MainScreenState>(
-                builder: (context, homeState, child) {
-                  return Transform(
-                    transform: Matrix4.identity()
-                      ..translate(
-                        homeState.translateSlideX,
-                        homeState.translateSlideY,
-                      )
-                      ..scale(homeState.scale),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      decoration: BoxDecoration(
-                        borderRadius: _animationController.isCompleted
-                            ? BorderRadius.circular(15)
-                            : BorderRadius.circular(0),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: mainScaffoldsShadowColor
-                                .withOpacity(_animationController.value),
-                            blurRadius: 50,
-                          ),
-                        ],
-                      ),
-                      child: navBarPages[homeState.selectedPageIndex],
+        child: Stack(
+          children: [
+            SlideMenu(
+              width: media.size.width,
+              height: media.size.height,
+              callBack: runAnimation,
+            ),
+            Consumer<MainScreenState>(
+              builder: (context, homeState, child) {
+                return Transform(
+                  transform: Matrix4.identity()
+                    ..translate(
+                      homeState.translateSlideX,
+                      homeState.translateSlideY,
+                    )
+                    ..scale(homeState.scale),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    decoration: BoxDecoration(
+                      borderRadius: _animationController.isCompleted
+                          ? BorderRadius.circular(15)
+                          : BorderRadius.circular(0),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: mainScaffoldsShadowColor
+                              .withOpacity(_animationController.value),
+                          blurRadius: 50,
+                        ),
+                      ],
                     ),
-                  );
-                },
-              ),
-            ],
-          ),
+                    child: navBarPages[homeState.selectedPageIndex],
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

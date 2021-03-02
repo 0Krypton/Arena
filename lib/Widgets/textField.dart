@@ -4,68 +4,162 @@ import 'package:flutter/material.dart';
 // importing themes
 import '../Themes/color/colorThemes.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
   CustomTextField({
+    this.controller,
+    this.type,
     this.maxLines = 1,
     this.maxLength,
+    this.limit = 0,
     @required this.labelText,
     this.prefixIconUrl,
     this.isObscure = false,
     this.isPasswordField = false,
+    this.focusNode,
+    this.nextFocusNode,
     this.callBackValidator,
     this.suffixOnPressed,
+    this.colorAnimController,
   });
 
   final int maxLines;
   final int maxLength;
+  final int limit;
+
+  final String type;
 
   final String labelText;
   final String prefixIconUrl;
 
+  final FocusNode focusNode;
+  final FocusNode nextFocusNode;
+
   final bool isObscure;
   final bool isPasswordField;
+
+  final TextEditingController controller;
+
+  final AnimationController colorAnimController;
 
   final Function(String input) callBackValidator;
   final Function suffixOnPressed;
 
   @override
+  _CustomTextFieldState createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  Animation<Color> textFieldFilledColor;
+  Animation<Color> textFieldTextColor;
+  Animation<Color> iconUnVisibleColor;
+
+  @override
+  void initState() {
+    super.initState();
+
+    textFieldFilledColor = ColorTween(
+      begin: colorShade600.withOpacity(.3),
+      end: Colors.red[100],
+    ).animate(widget.colorAnimController)
+      ..addListener(() {
+        setState(() {});
+      });
+    textFieldTextColor = ColorTween(
+      begin: colorShade800,
+      end: Colors.red[900],
+    ).animate(widget.colorAnimController)
+      ..addListener(() {
+        setState(() {});
+      });
+    iconUnVisibleColor = ColorTween(
+      begin: colorShade800,
+      end: Colors.red[600],
+    ).animate(widget.colorAnimController)
+      ..addListener(() {
+        setState(() {});
+      });
+  }
+
+  bool validateEmail(String value) {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(value);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
       maxLines: 1,
-      maxLength: maxLength == null ? null : maxLength,
+      minLines: 1,
+      maxLength: widget.maxLength == null ? null : widget.maxLength,
       textAlign: TextAlign.center,
-      obscureText: isObscure,
-      cursorColor: colorShade800,
-      validator: callBackValidator,
+      obscureText: widget.isObscure,
+      cursorColor: textFieldTextColor.value,
+      validator: widget.callBackValidator,
+      focusNode: widget.focusNode,
       style: TextStyle(
-        color: colorShade800,
+        color: textFieldTextColor.value,
         fontSize: 15,
         fontFamily: 'Reglo',
+        letterSpacing: 1,
+        wordSpacing: 1,
       ),
+      onChanged: (v) {
+        if (widget.type == 'email') {
+          if (validateEmail(v.trim())) {
+            widget.colorAnimController.reverse();
+          } else {
+            widget.colorAnimController.forward();
+          }
+        } else {
+          if (v.trim().length >= (widget.limit ?? 0)) {
+            widget.colorAnimController.reverse();
+          } else {
+            widget.colorAnimController.forward();
+          }
+        }
+      },
+      onFieldSubmitted: (value) {
+        if (widget.type == 'email') {
+          if (validateEmail(value.trim())) {
+            FocusScope.of(context).requestFocus(widget.nextFocusNode);
+          }
+        } else {
+          if ((value.length >= (widget.limit ?? 0))) {
+            FocusScope.of(context).requestFocus(widget.nextFocusNode);
+          }
+        }
+      },
       decoration: InputDecoration(
+        counterText: '',
         filled: true,
-        fillColor: colorShade600.withOpacity(.3),
-        labelText: labelText,
+        fillColor: textFieldFilledColor.value,
+        labelText: widget.labelText,
         labelStyle: TextStyle(
-          color: colorShade800,
+          color: textFieldTextColor.value,
           fontSize: 12,
           fontFamily: 'Lequire',
         ),
-        prefixIcon: prefixIconUrl != null
+        prefixIcon: widget.prefixIconUrl != null
             ? Container(
                 height: 15,
                 width: 15,
-                padding: EdgeInsets.all(8),
-                child: Image.asset(prefixIconUrl),
+                padding: const EdgeInsets.all(8),
+                child: Image.asset(
+                  widget.prefixIconUrl,
+                  color: textFieldTextColor.value,
+                ),
               )
             : null,
-        suffixIcon: isPasswordField
+        suffixIcon: widget.isPasswordField
             ? IconButton(
                 icon: Icon(
-                  isObscure ? Icons.visibility_off : Icons.visibility,
-                  color: isObscure ? colorShade700 : colorShade800,
+                  widget.isObscure ? Icons.visibility_off : Icons.visibility,
+                  color: widget.isObscure
+                      ? textFieldTextColor.value
+                      : iconUnVisibleColor.value,
                 ),
-                onPressed: suffixOnPressed,
+                onPressed: widget.suffixOnPressed,
               )
             : SizedBox(
                 height: 0,

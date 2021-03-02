@@ -174,9 +174,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                     width: width,
                     imageHeight: ((height * .3) * .8),
                   ),
-                  SizedBox(
-                    height: ((width * .4) / 2) + 30,
-                  ),
+                  SizedBox(height: ((width * .4) / 2) + 30),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Align(
@@ -259,8 +257,15 @@ class _EditProfileScreenState extends State<EditProfileScreen>
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    _showAddNewBottomSheet = false;
                     _addNewBottomSheetOpacity = 0.0;
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () {
+                        setState(() {
+                          _showAddNewBottomSheet = false;
+                        });
+                      },
+                    );
                   });
                 },
                 child: Container(
@@ -281,8 +286,9 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   }
 
   Widget _buildBottomSheetContainer({width, height}) {
-    return Positioned(
-      bottom: 0,
+    return AnimatedPositioned(
+      duration: const Duration(milliseconds: 100),
+      bottom: _showAddNewBottomSheet ? 0.0 : 300,
       right: 0,
       left: 0,
       child: Container(
@@ -334,13 +340,18 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                   limit: 3,
                 ),
                 Positioned(
-                  bottom: -(20 / 2),
+                  bottom: -(15 / 2),
                   right: 15,
                   child: TextFieldCounter(
                     count: clanUserNameController.text.length,
                     isValid: clanUserNameController.text.length >= 3,
-                    height: 20,
-                    verticalPadding: 3,
+                    height: 15,
+                    verticalPadding: 2,
+                    radius: 6,
+                    beginScale: 0.0,
+                    middleOneScale: 1.3,
+                    middleTwoScale: 0.7,
+                    endScale: 1.0,
                     bgColor: colorShade800,
                     bgErrorColor: Colors.red[700],
                     textColor: Colors.white,
@@ -380,13 +391,18 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                   limit: 3,
                 ),
                 Positioned(
-                  bottom: -(20 / 2),
+                  bottom: -(15 / 2),
                   right: 15,
                   child: TextFieldCounter(
                     count: clanNameController.text.length,
                     isValid: clanNameController.text.length >= 3,
-                    height: 20,
-                    verticalPadding: 3,
+                    height: 15,
+                    verticalPadding: 2,
+                    radius: 6,
+                    beginScale: 0.0,
+                    middleOneScale: 1.3,
+                    middleTwoScale: 0.7,
+                    endScale: 1.0,
                     bgColor: colorShade800,
                     bgErrorColor: Colors.red[700],
                     textColor: Colors.white,
@@ -412,8 +428,15 @@ class _EditProfileScreenState extends State<EditProfileScreen>
         clanUserNameFocusNode.unfocus();
         clanNameFocusNode.unfocus();
         setState(() {
-          _showAddNewBottomSheet = false;
           _addNewBottomSheetOpacity = 0.0;
+          Future.delayed(
+            const Duration(milliseconds: 300),
+            () {
+              setState(() {
+                _showAddNewBottomSheet = false;
+              });
+            },
+          );
         });
       },
       child: Container(
@@ -477,7 +500,14 @@ class _EditProfileScreenState extends State<EditProfileScreen>
         onTap: () {
           setState(() {
             _showAddNewBottomSheet = true;
-            _addNewBottomSheetOpacity = 1.0;
+            Future.delayed(
+              const Duration(milliseconds: 150),
+              () {
+                setState(() {
+                  _addNewBottomSheetOpacity = 1.0;
+                });
+              },
+            );
           });
         },
         child: Container(
@@ -593,7 +623,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
             colorAnimController: bioColorController,
             focusNode: bioFocusNode,
             hintText: 'BIO',
-            maxLenght: 150,
+            maxLength: 150,
             minLines: 5,
             maxLines: 5,
             onChanged: (v) {
@@ -625,10 +655,14 @@ class _EditProfileScreenState extends State<EditProfileScreen>
             right: 15,
             child: TextFieldCounter(
               height: 20,
-              verticalPadding: 3,
+              verticalPadding: 4,
               count: bioController.text.length,
               isValid: bioController.text.length <= 150,
               bgColor: colorShade800,
+              beginScale: 0.0,
+              middleOneScale: 1.3,
+              middleTwoScale: 0.7,
+              endScale: 1.0,
               bgErrorColor: Colors.red[700],
               textColor: Colors.white,
               errorTextColor: Colors.white,
@@ -682,6 +716,11 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                     isValid: fNameController.text.length >= 3,
                     height: 15,
                     verticalPadding: 2,
+                    radius: 6,
+                    beginScale: 0.0,
+                    middleOneScale: 1.3,
+                    middleTwoScale: 0.7,
+                    endScale: 1.0,
                     bgColor: colorShade800,
                     bgErrorColor: Colors.red[700],
                     textColor: Colors.white,
@@ -730,6 +769,11 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                     isValid: lNameController.text.length >= 4,
                     height: 15,
                     verticalPadding: 2,
+                    radius: 6,
+                    beginScale: 0.0,
+                    middleOneScale: 1.3,
+                    middleTwoScale: 0.7,
+                    endScale: 1.0,
                     bgColor: colorShade800,
                     bgErrorColor: Colors.red[700],
                     textColor: Colors.white,
@@ -777,13 +821,18 @@ class _EditProfileScreenState extends State<EditProfileScreen>
             },
           ),
           Positioned(
-            bottom: -(20 / 2),
+            bottom: -(15 / 2),
             right: 15,
             child: TextFieldCounter(
               count: userNameController.text.length,
               isValid: userNameController.text.length >= 4,
-              height: 20,
-              verticalPadding: 3,
+              height: 15,
+              verticalPadding: 2,
+              radius: 6,
+              beginScale: 0.0,
+              middleOneScale: 1.3,
+              middleTwoScale: 0.7,
+              endScale: 1.0,
               bgColor: colorShade800,
               bgErrorColor: Colors.red[700],
               textColor: Colors.white,

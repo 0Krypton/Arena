@@ -14,7 +14,7 @@ class TextFieldWithValidation extends StatefulWidget {
     this.onChanged,
     this.minLines = 1,
     this.maxLines = 1,
-    this.maxLenght = 100,
+    this.maxLength = 100,
     this.hasBorder = true,
     this.isFilled = true,
     this.fillColor = profileScrTxtFieldFilledColor,
@@ -36,7 +36,7 @@ class TextFieldWithValidation extends StatefulWidget {
 
   final int minLines;
   final int maxLines;
-  final int maxLenght;
+  final int maxLength;
   final int limit;
 
   final bool hasBorder;
@@ -105,7 +105,7 @@ class _TextFieldWithValidationState extends State<TextFieldWithValidation> {
       focusNode: widget.focusNode,
       onSubmitted: (_) {
         if ((widget.controller.text.length >= (widget.limit ?? 0)) &&
-            (widget.controller.text.length <= widget.maxLenght)) {
+            (widget.controller.text.length <= widget.maxLength)) {
           FocusScope.of(context).requestFocus(widget.nextFocusNode);
         }
       },

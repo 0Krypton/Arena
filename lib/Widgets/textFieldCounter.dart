@@ -7,11 +7,16 @@ class TextFieldCounter extends StatelessWidget {
     @required this.isValid,
     @required this.height,
     @required this.verticalPadding,
+    this.radius = 8,
     @required this.scaleAnimationController,
     @required this.bgColor,
     @required this.bgErrorColor,
     @required this.textColor,
     @required this.errorTextColor,
+    @required this.beginScale,
+    @required this.middleOneScale,
+    @required this.middleTwoScale,
+    @required this.endScale,
   });
   final bool isValid;
 
@@ -19,6 +24,9 @@ class TextFieldCounter extends StatelessWidget {
 
   final double height;
   final double verticalPadding;
+  final double radius;
+
+  final double beginScale, middleOneScale, middleTwoScale, endScale;
 
   final Color bgColor;
   final Color bgErrorColor;
@@ -33,15 +41,15 @@ class TextFieldCounter extends StatelessWidget {
       scale: TweenSequence(
         <TweenSequenceItem<double>>[
           TweenSequenceItem<double>(
-            tween: Tween<double>(begin: 0, end: 1.3),
+            tween: Tween<double>(begin: beginScale, end: middleOneScale),
             weight: 40.0,
           ),
           TweenSequenceItem<double>(
-            tween: Tween<double>(begin: 1.3, end: 0.7),
+            tween: Tween<double>(begin: middleOneScale, end: middleTwoScale),
             weight: 20.0,
           ),
           TweenSequenceItem<double>(
-            tween: Tween<double>(begin: 0.7, end: 1),
+            tween: Tween<double>(begin: middleTwoScale, end: endScale),
             weight: 40.0,
           ),
         ],
@@ -52,7 +60,7 @@ class TextFieldCounter extends StatelessWidget {
         decoration: BoxDecoration(
           color: isValid ? bgColor : bgErrorColor,
           borderRadius: BorderRadius.all(
-            Radius.circular(8),
+            Radius.circular(radius),
           ),
         ),
         child: Padding(

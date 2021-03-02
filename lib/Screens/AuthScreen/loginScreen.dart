@@ -32,8 +32,42 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen>
+    with TickerProviderStateMixin {
   bool _isVisible = true;
+
+  AnimationController emailColorController;
+  AnimationController passwordColorController;
+
+  FocusNode emailFocusNode;
+  FocusNode passwordFocusNode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    emailFocusNode = new FocusNode();
+    passwordFocusNode = new FocusNode();
+
+    emailColorController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    passwordColorController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailColorController.dispose();
+    passwordColorController.dispose();
+
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,11 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildHeader({height, width}) {
-    return ArenaLogo(
-      height: height,
-    );
-  }
+  Widget _buildHeader({height, width}) => ArenaLogo(height: height);
 
   Widget _buildBody({height, width}) {
     final paddingTopBottom = 40.0;
@@ -110,7 +140,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 50,
                       child: CustomTextField(
                         labelText: 'Email',
+                        focusNode: emailFocusNode,
+                        type: 'email',
+                        nextFocusNode: passwordFocusNode,
                         prefixIconUrl: 'assets/form/emailPng.png',
+                        colorAnimController: emailColorController,
                         callBackValidator: (String value) {},
                       ),
                     ),
@@ -119,7 +153,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 50,
                       child: CustomTextField(
                         labelText: 'Password',
+                        focusNode: passwordFocusNode,
+                        nextFocusNode: passwordFocusNode,
                         prefixIconUrl: 'assets/form/securePng.png',
+                        colorAnimController: passwordColorController,
+                        limit: 8,
                         callBackValidator: (String value) {},
                         isObscure: _isVisible,
                         isPasswordField: true,

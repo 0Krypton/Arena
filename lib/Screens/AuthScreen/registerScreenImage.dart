@@ -33,7 +33,41 @@ class RegisterScreenImage extends StatefulWidget {
   _RegisterScreenImageState createState() => _RegisterScreenImageState();
 }
 
-class _RegisterScreenImageState extends State<RegisterScreenImage> {
+class _RegisterScreenImageState extends State<RegisterScreenImage>
+    with TickerProviderStateMixin {
+  AnimationController fNameColorController;
+  AnimationController lNameColorController;
+
+  FocusNode fNameFocusNode;
+  FocusNode lNameFocusNode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    fNameFocusNode = new FocusNode();
+    lNameFocusNode = new FocusNode();
+
+    fNameColorController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    lNameColorController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    fNameColorController.dispose();
+    lNameColorController.dispose();
+
+    fNameFocusNode.dispose();
+    lNameFocusNode.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = (MediaQuery.of(context).size);
@@ -47,19 +81,22 @@ class _RegisterScreenImageState extends State<RegisterScreenImage> {
         child: Container(
           height: height,
           width: width,
-          child: Stack(
-            children: [
-              _buildHeader(
-                height: height * .4,
-                width: width,
-              ),
-              _buildBody(
-                height: height * .6,
-                width: width,
-                paddingfromImage: ((height * .4) / 2) + ((width * .4) / 2) + 20,
-              ),
-              _buildBackButton()
-            ],
+          child: SingleChildScrollView(
+            child: Stack(
+              children: [
+                _buildHeader(
+                  height: height * .4,
+                  width: width,
+                ),
+                _buildBody(
+                  height: height * .6,
+                  width: width,
+                  paddingfromImage:
+                      ((height * .4) / 2) + ((width * .4) / 2) + 20,
+                ),
+                _buildBackButton()
+              ],
+            ),
           ),
         ),
       ),
@@ -159,11 +196,19 @@ class _RegisterScreenImageState extends State<RegisterScreenImage> {
                 children: [
                   CustomTextField(
                     labelText: 'First Name',
+                    focusNode: fNameFocusNode,
+                    nextFocusNode: lNameFocusNode,
+                    colorAnimController: fNameColorController,
+                    limit: 3,
                     callBackValidator: (String value) {},
                   ),
                   SizedBox(height: 10),
                   CustomTextField(
                     labelText: 'Last Name',
+                    focusNode: lNameFocusNode,
+                    nextFocusNode: lNameFocusNode,
+                    colorAnimController: lNameColorController,
+                    limit: 3,
                     callBackValidator: (String value) {},
                   ),
                   SizedBox(height: 15),

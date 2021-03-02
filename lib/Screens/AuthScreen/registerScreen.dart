@@ -35,8 +35,51 @@ class RegisterScreen extends StatefulWidget {
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends State<RegisterScreen>
+    with TickerProviderStateMixin {
   bool _isVisible = true;
+
+  AnimationController emailColorController;
+  AnimationController passwordColorController;
+  AnimationController userNameColorController;
+
+  FocusNode emailFocusNode;
+  FocusNode passwordFocusNode;
+  FocusNode userNameFocusNode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    emailFocusNode = new FocusNode();
+    passwordFocusNode = new FocusNode();
+    userNameFocusNode = new FocusNode();
+
+    emailColorController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    passwordColorController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    userNameColorController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailColorController.dispose();
+    passwordColorController.dispose();
+    userNameColorController.dispose();
+
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
+    userNameFocusNode.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +95,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
           color: Colors.white,
           child: Stack(
             children: [
-              Column(
-                children: [
-                  SizedBox(height: 30),
-                  _buildHeader(height: (size.height) * .25, width: size.width),
-                  _buildBody(width: size.width),
-                ],
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(height: 30),
+                    _buildHeader(
+                        height: (size.height) * .25, width: size.width),
+                    _buildBody(width: size.width),
+                  ],
+                ),
               ),
               _buildBackButton(),
             ],
@@ -93,7 +139,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     return Container(
       width: width,
-      // color: Colors.black,
       child: Padding(
         padding: EdgeInsets.all(paddingTopBottom),
         child: Container(
@@ -126,7 +171,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 50,
                       child: CustomTextField(
                         labelText: 'Email',
+                        focusNode: emailFocusNode,
+                        type: 'email',
+                        nextFocusNode: userNameFocusNode,
                         prefixIconUrl: 'assets/form/emailPng.png',
+                        colorAnimController: emailColorController,
                         callBackValidator: (String value) {},
                       ),
                     ),
@@ -135,7 +184,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 50,
                       child: CustomTextField(
                         labelText: 'User Name',
+                        focusNode: userNameFocusNode,
+                        nextFocusNode: passwordFocusNode,
                         prefixIconUrl: 'assets/form/userPng.png',
+                        colorAnimController: userNameColorController,
+                        limit: 4,
                         callBackValidator: (String value) {},
                       ),
                     ),
@@ -144,7 +197,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 50,
                       child: CustomTextField(
                         labelText: 'Password',
+                        focusNode: passwordFocusNode,
+                        nextFocusNode: passwordFocusNode,
                         prefixIconUrl: 'assets/form/securePng.png',
+                        colorAnimController: passwordColorController,
+                        limit: 8,
                         callBackValidator: (String value) {},
                         isObscure: _isVisible,
                         isPasswordField: true,

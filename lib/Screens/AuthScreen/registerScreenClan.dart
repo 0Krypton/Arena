@@ -34,7 +34,31 @@ class RegisterScreenClan extends StatefulWidget {
   _RegisterScreenClanState createState() => _RegisterScreenClanState();
 }
 
-class _RegisterScreenClanState extends State<RegisterScreenClan> {
+class _RegisterScreenClanState extends State<RegisterScreenClan>
+    with TickerProviderStateMixin {
+  AnimationController fNameColorController;
+  FocusNode fNameFocusNode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    fNameFocusNode = new FocusNode();
+
+    fNameColorController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    fNameColorController.dispose();
+
+    fNameFocusNode.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = (MediaQuery.of(context).size);
@@ -44,12 +68,12 @@ class _RegisterScreenClanState extends State<RegisterScreenClan> {
 
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Container(
-                height: height,
-                width: size.width,
+        child: Stack(
+          children: [
+            Container(
+              height: height,
+              width: size.width,
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
                     SizedBox(height: 50),
@@ -64,9 +88,9 @@ class _RegisterScreenClanState extends State<RegisterScreenClan> {
                   ],
                 ),
               ),
-              _buildBackButton()
-            ],
-          ),
+            ),
+            _buildBackButton()
+          ],
         ),
       ),
     );
@@ -166,11 +190,14 @@ class _RegisterScreenClanState extends State<RegisterScreenClan> {
                     height: 90,
                     child: CustomTextField(
                       labelText: 'Clan/Team Name',
+                      focusNode: fNameFocusNode,
+                      nextFocusNode: fNameFocusNode,
+                      colorAnimController: fNameColorController,
                       maxLength: 25,
+                      limit: 3,
                       callBackValidator: (String value) {},
                     ),
                   ),
-                  SizedBox(height: 15),
                   SubmitButton(
                     label: 'Complete',
                     textStyle: TextStyle(
