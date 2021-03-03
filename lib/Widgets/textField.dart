@@ -17,8 +17,8 @@ class CustomTextField extends StatefulWidget {
     this.isPasswordField = false,
     this.focusNode,
     this.nextFocusNode,
-    this.callBackValidator,
     this.suffixOnPressed,
+    this.onChanged,
     this.colorAnimController,
   });
 
@@ -41,8 +41,8 @@ class CustomTextField extends StatefulWidget {
 
   final AnimationController colorAnimController;
 
-  final Function(String input) callBackValidator;
   final Function suffixOnPressed;
+  final Function onChanged;
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -88,14 +88,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return TextField(
+      controller: widget.controller ?? null,
+      autofocus: false,
       maxLines: 1,
       minLines: 1,
       maxLength: widget.maxLength == null ? null : widget.maxLength,
       textAlign: TextAlign.center,
       obscureText: widget.isObscure,
       cursorColor: textFieldTextColor.value,
-      validator: widget.callBackValidator,
       focusNode: widget.focusNode,
       style: TextStyle(
         color: textFieldTextColor.value,
@@ -108,18 +109,22 @@ class _CustomTextFieldState extends State<CustomTextField> {
         if (widget.type == 'email') {
           if (validateEmail(v.trim())) {
             widget.colorAnimController.reverse();
+            widget.onChanged(v.trim());
           } else {
             widget.colorAnimController.forward();
+            widget.onChanged(v.trim());
           }
         } else {
           if (v.trim().length >= (widget.limit ?? 0)) {
             widget.colorAnimController.reverse();
+            widget.onChanged(v.trim());
           } else {
             widget.colorAnimController.forward();
+            widget.onChanged(v.trim());
           }
         }
       },
-      onFieldSubmitted: (value) {
+      onSubmitted: (value) {
         if (widget.type == 'email') {
           if (validateEmail(value.trim())) {
             FocusScope.of(context).requestFocus(widget.nextFocusNode);
@@ -132,6 +137,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       },
       decoration: InputDecoration(
         counterText: '',
+        border: InputBorder.none,
         filled: true,
         fillColor: textFieldFilledColor.value,
         labelText: widget.labelText,

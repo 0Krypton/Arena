@@ -2,7 +2,6 @@
 import 'package:ArenaScrims/Widgets/textField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
 //importing themes
 import '../../Themes/color/colorThemes.dart';
@@ -13,6 +12,7 @@ import '../MainScreen/mainScreen.dart';
 //importing Widgets
 import '../../Widgets/backButton.dart';
 import '../../Widgets/submitButton.dart';
+import '../../Widgets/textFieldCounter.dart';
 
 class RegisterScreenClan extends StatefulWidget {
   static const id = 'RegisterScreenClan';
@@ -36,27 +36,42 @@ class RegisterScreenClan extends StatefulWidget {
 
 class _RegisterScreenClanState extends State<RegisterScreenClan>
     with TickerProviderStateMixin {
-  AnimationController fNameColorController;
-  FocusNode fNameFocusNode;
+  TextEditingController clanNameController;
+
+  AnimationController clanNameColorController;
+  AnimationController clanScaleAnimController;
+
+  FocusNode clanNameFocusNode;
 
   @override
   void initState() {
     super.initState();
 
-    fNameFocusNode = new FocusNode();
+    clanNameFocusNode = new FocusNode();
 
-    fNameColorController = AnimationController(
+    clanNameController = TextEditingController(text: '');
+
+    clanNameColorController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
+
+    clanScaleAnimController = AnimationController(
+        vsync: this, value: 0.0, duration: const Duration(milliseconds: 300));
+
+    clanScaleAnimController.addListener(() {});
   }
 
   @override
   void dispose() {
     super.dispose();
-    fNameColorController.dispose();
 
-    fNameFocusNode.dispose();
+    clanNameController.dispose();
+
+    clanNameColorController.dispose();
+    clanScaleAnimController.dispose();
+
+    clanNameFocusNode.dispose();
   }
 
   @override
@@ -182,42 +197,75 @@ class _RegisterScreenClanState extends State<RegisterScreenClan>
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 15),
-            Form(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 90,
-                    child: CustomTextField(
-                      labelText: 'Clan/Team Name',
-                      focusNode: fNameFocusNode,
-                      nextFocusNode: fNameFocusNode,
-                      colorAnimController: fNameColorController,
-                      maxLength: 25,
-                      limit: 3,
-                      callBackValidator: (String value) {},
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  overflow: Overflow.visible,
+                  children: [
+                    Container(
+                      height: 50,
+                      child: CustomTextField(
+                        labelText: 'Clan/Team Name',
+                        controller: clanNameController,
+                        focusNode: clanNameFocusNode,
+                        nextFocusNode: clanNameFocusNode,
+                        colorAnimController: clanNameColorController,
+                        onChanged: (v) {
+                          if (v.length > 0) {
+                            clanScaleAnimController.forward();
+                            setState(() {});
+                          } else {
+                            setState(() {});
+                            clanScaleAnimController.reverse();
+                          }
+                        },
+                        maxLength: 25,
+                        limit: 3,
+                      ),
                     ),
-                  ),
-                  SubmitButton(
-                    label: 'Complete',
-                    textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontFamily: 'Noir',
-                      fontWeight: FontWeight.bold,
-                    ),
-                    color: colorShade700,
-                    shadowColor: shadowColor900,
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MainScreen.comeToPage(),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 30),
-                ],
+                    Positioned(
+                      bottom: -(15 / 2),
+                      right: 15,
+                      child: TextFieldCounter(
+                        count: clanNameController.text.length,
+                        isValid: clanNameController.text.length >= 3,
+                        height: 15,
+                        verticalPadding: 2,
+                        radius: 6,
+                        beginScale: 0.0,
+                        middleOneScale: 1.3,
+                        middleTwoScale: 0.7,
+                        endScale: 1.0,
+                        bgColor: colorShade800,
+                        bgErrorColor: Colors.red[700],
+                        textColor: Colors.white,
+                        errorTextColor: Colors.white,
+                        scaleAnimationController: clanScaleAnimController,
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 15),
+            SubmitButton(
+              label: 'Complete',
+              textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                fontFamily: 'Noir',
+                fontWeight: FontWeight.bold,
               ),
-            )
+              color: colorShade700,
+              shadowColor: shadowColor900,
+              onTap: () {
+                Navigator.of(context).push(
+                  MainScreen.comeToPage(),
+                );
+              },
+            ),
+            SizedBox(height: 30),
           ],
         ),
       ),

@@ -190,47 +190,43 @@ class _RegisterScreenImageState extends State<RegisterScreenImage>
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 15),
-            Form(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomTextField(
-                    labelText: 'First Name',
-                    focusNode: fNameFocusNode,
-                    nextFocusNode: lNameFocusNode,
-                    colorAnimController: fNameColorController,
-                    limit: 3,
-                    callBackValidator: (String value) {},
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTextField(
+                  labelText: 'First Name',
+                  focusNode: fNameFocusNode,
+                  nextFocusNode: lNameFocusNode,
+                  colorAnimController: fNameColorController,
+                  limit: 3,
+                ),
+                SizedBox(height: 10),
+                CustomTextField(
+                  labelText: 'Last Name',
+                  focusNode: lNameFocusNode,
+                  nextFocusNode: lNameFocusNode,
+                  colorAnimController: lNameColorController,
+                  limit: 3,
+                ),
+                SizedBox(height: 15),
+                SubmitButton(
+                  label: 'Next',
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontFamily: 'Lequire',
+                    fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(height: 10),
-                  CustomTextField(
-                    labelText: 'Last Name',
-                    focusNode: lNameFocusNode,
-                    nextFocusNode: lNameFocusNode,
-                    colorAnimController: lNameColorController,
-                    limit: 3,
-                    callBackValidator: (String value) {},
-                  ),
-                  SizedBox(height: 15),
-                  SubmitButton(
-                    label: 'Next',
-                    textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontFamily: 'Lequire',
-                      fontWeight: FontWeight.bold,
-                    ),
-                    color: colorShade700,
-                    shadowColor: shadowColor900,
-                    onTap: () {
-                      Navigator.of(context).push(
-                        RegisterScreenGame.comeToPage(),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 30),
-                ],
-              ),
+                  color: colorShade700,
+                  shadowColor: shadowColor900,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      RegisterScreenGame.comeToPage(),
+                    );
+                  },
+                ),
+                SizedBox(height: 30),
+              ],
             )
           ],
         ),

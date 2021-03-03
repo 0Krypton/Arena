@@ -24,7 +24,7 @@ class GetReadyTournoumentsList extends StatefulWidget {
 
   @override
   _GetReadyTournoumentsListState createState() =>
-      _GetReadyTournoumentsListState(heightOfTheContainer: (height / 3) + 15);
+      _GetReadyTournoumentsListState(heightOfTheContainer: (height / 4) + 15);
 }
 
 class _GetReadyTournoumentsListState extends State<GetReadyTournoumentsList> {

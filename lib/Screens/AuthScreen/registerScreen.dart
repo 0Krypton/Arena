@@ -163,75 +163,70 @@ class _RegisterScreenState extends State<RegisterScreen>
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 10),
-              Form(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 50,
-                      child: CustomTextField(
-                        labelText: 'Email',
-                        focusNode: emailFocusNode,
-                        type: 'email',
-                        nextFocusNode: userNameFocusNode,
-                        prefixIconUrl: 'assets/form/emailPng.png',
-                        colorAnimController: emailColorController,
-                        callBackValidator: (String value) {},
-                      ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 50,
+                    child: CustomTextField(
+                      labelText: 'Email',
+                      focusNode: emailFocusNode,
+                      type: 'email',
+                      nextFocusNode: userNameFocusNode,
+                      prefixIconUrl: 'assets/form/emailPng.png',
+                      colorAnimController: emailColorController,
                     ),
-                    SizedBox(height: 10),
-                    Container(
-                      height: 50,
-                      child: CustomTextField(
-                        labelText: 'User Name',
-                        focusNode: userNameFocusNode,
-                        nextFocusNode: passwordFocusNode,
-                        prefixIconUrl: 'assets/form/userPng.png',
-                        colorAnimController: userNameColorController,
-                        limit: 4,
-                        callBackValidator: (String value) {},
-                      ),
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    height: 50,
+                    child: CustomTextField(
+                      labelText: 'User Name',
+                      focusNode: userNameFocusNode,
+                      nextFocusNode: passwordFocusNode,
+                      prefixIconUrl: 'assets/form/userPng.png',
+                      colorAnimController: userNameColorController,
+                      limit: 4,
                     ),
-                    SizedBox(height: 10),
-                    Container(
-                      height: 50,
-                      child: CustomTextField(
-                        labelText: 'Password',
-                        focusNode: passwordFocusNode,
-                        nextFocusNode: passwordFocusNode,
-                        prefixIconUrl: 'assets/form/securePng.png',
-                        colorAnimController: passwordColorController,
-                        limit: 8,
-                        callBackValidator: (String value) {},
-                        isObscure: _isVisible,
-                        isPasswordField: true,
-                        suffixOnPressed: () {
-                          setState(() {
-                            _isVisible = !_isVisible;
-                          });
-                        },
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    SubmitButton(
-                      label: 'Next',
-                      textStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontFamily: 'Lequire',
-                        fontWeight: FontWeight.bold,
-                      ),
-                      color: colorShade700,
-                      shadowColor: shadowColor900,
-                      onTap: () {
-                        Navigator.of(context).push(
-                          RegisterScreenImage.comeToPage(),
-                        );
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    height: 50,
+                    child: CustomTextField(
+                      labelText: 'Password',
+                      focusNode: passwordFocusNode,
+                      nextFocusNode: passwordFocusNode,
+                      prefixIconUrl: 'assets/form/securePng.png',
+                      colorAnimController: passwordColorController,
+                      limit: 8,
+                      isObscure: _isVisible,
+                      isPasswordField: true,
+                      suffixOnPressed: () {
+                        setState(() {
+                          _isVisible = !_isVisible;
+                        });
                       },
                     ),
-                    SizedBox(height: 10),
-                  ],
-                ),
+                  ),
+                  SizedBox(height: 15),
+                  SubmitButton(
+                    label: 'Next',
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: 'Lequire',
+                      fontWeight: FontWeight.bold,
+                    ),
+                    color: colorShade700,
+                    shadowColor: shadowColor900,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        RegisterScreenImage.comeToPage(),
+                      );
+                    },
+                  ),
+                  SizedBox(height: 10),
+                ],
               )
             ],
           ),

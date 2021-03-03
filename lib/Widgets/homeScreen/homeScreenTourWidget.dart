@@ -58,7 +58,7 @@ class _BuildHomeTourContainerState extends State<BuildHomeTourContainer> {
       child: RotatedBox(
         quarterTurns: 3,
         child: Container(
-          height: 25,
+          height: 20,
           child: FittedBox(
             child: Text(
               '4 FEB',
@@ -83,8 +83,8 @@ class _BuildHomeTourContainerState extends State<BuildHomeTourContainer> {
         child: Row(
           children: [
             BuildOptionIcon(
-              height: 45.0,
-              width: 45.0,
+              height: 35.0,
+              width: 35.0,
               color: const Color(0xFF0079BD),
               shadowColor: const Color(0xFF0079BD),
               iconUrl: 'assets/timeRemainSvg.svg',
@@ -92,10 +92,10 @@ class _BuildHomeTourContainerState extends State<BuildHomeTourContainer> {
                 print('Time Remained');
               },
             ),
-            SizedBox(width: 15),
+            SizedBox(width: 10),
             BuildOptionIcon(
-              height: 45.0,
-              width: 45.0,
+              height: 35.0,
+              width: 35.0,
               color: const Color(0xFFBD0000),
               shadowColor: const Color(0xFFFF0000),
               iconUrl: 'assets/delIconSvg.svg',
@@ -161,23 +161,24 @@ class _BuildHomeTourContainerState extends State<BuildHomeTourContainer> {
 
   Widget _buildTourGetRoomButton() {
     return Positioned(
-      top: widget.heightOfContainer / 2,
-      right: 25,
+      // top: widget.heightOfContainer / 2,
+      bottom: 15,
+      right: 15,
       child: GestureDetector(
         onTap: () {
           Navigator.of(context)
               .push(TourChatRoom.comeToPage(tour: widget.tour));
         },
         child: Container(
-          width: 35,
-          height: 35,
+          width: 30,
+          height: 30,
           decoration: BoxDecoration(
             color: widget.tour.colorBegin,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
                 color: widget.tour.secondaryShadowColor,
-                blurRadius: 15,
+                blurRadius: 18,
               ),
             ],
           ),
@@ -186,7 +187,7 @@ class _BuildHomeTourContainerState extends State<BuildHomeTourContainer> {
             child: Icon(
               Icons.arrow_back_ios,
               color: Colors.white,
-              size: 20,
+              size: 15,
             ),
           ),
         ),
@@ -224,38 +225,10 @@ class _BuildHomeTourContainerState extends State<BuildHomeTourContainer> {
     );
   }
 
-  // Widget _buildTourBgImage() {
-  //   bool hasBgImage = widget.tour.bgImageUrl != null;
-  //   // print(hasBgImage);
-  //   return hasBgImage
-  //       ? Positioned(
-  //           bottom: 0,
-  //           child: Container(
-  //             height: widget.heightOfContainer,
-  //             width: widget.widthOfChildContainer,
-  //             // color: Colors.black,
-  //             child: ClipRRect(
-  //               borderRadius: BorderRadius.only(
-  //                 bottomLeft: Radius.circular(15),
-  //                 bottomRight: Radius.circular(15),
-  //               ),
-  //               child: Opacity(
-  //                 opacity: 0.4,
-  //                 child: Image.asset(
-  //                   widget.tour.bgImageUrl,
-  //                   fit: BoxFit.fitWidth,
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //         )
-  //       : const SizedBox();
-  // }
-
   Widget _buildTourImage() {
     return Positioned(
       bottom: 0,
-      left: 40,
+      left: 50,
       child: Container(
         height: widget.heightOfContainer + 20,
         child: Image.asset(

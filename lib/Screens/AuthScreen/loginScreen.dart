@@ -132,86 +132,82 @@ class _LoginScreenState extends State<LoginScreen>
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 10),
-              Form(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 50,
-                      child: CustomTextField(
-                        labelText: 'Email',
-                        focusNode: emailFocusNode,
-                        type: 'email',
-                        nextFocusNode: passwordFocusNode,
-                        prefixIconUrl: 'assets/form/emailPng.png',
-                        colorAnimController: emailColorController,
-                        callBackValidator: (String value) {},
-                      ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 50,
+                    child: CustomTextField(
+                      labelText: 'Email',
+                      focusNode: emailFocusNode,
+                      type: 'email',
+                      nextFocusNode: passwordFocusNode,
+                      prefixIconUrl: 'assets/form/emailPng.png',
+                      colorAnimController: emailColorController,
                     ),
-                    SizedBox(height: 10),
-                    Container(
-                      height: 50,
-                      child: CustomTextField(
-                        labelText: 'Password',
-                        focusNode: passwordFocusNode,
-                        nextFocusNode: passwordFocusNode,
-                        prefixIconUrl: 'assets/form/securePng.png',
-                        colorAnimController: passwordColorController,
-                        limit: 8,
-                        callBackValidator: (String value) {},
-                        isObscure: _isVisible,
-                        isPasswordField: true,
-                        suffixOnPressed: () {
-                          setState(() {
-                            _isVisible = !_isVisible;
-                          });
-                        },
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    SubmitButton(
-                      label: 'Login',
-                      textStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontFamily: 'Noir',
-                        fontWeight: FontWeight.bold,
-                      ),
-                      color: colorShade700,
-                      shadowColor: shadowColor900,
-                      onTap: () {
-                        print('Loging');
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    height: 50,
+                    child: CustomTextField(
+                      labelText: 'Password',
+                      focusNode: passwordFocusNode,
+                      nextFocusNode: passwordFocusNode,
+                      prefixIconUrl: 'assets/form/securePng.png',
+                      colorAnimController: passwordColorController,
+                      limit: 8,
+                      isObscure: _isVisible,
+                      isPasswordField: true,
+                      suffixOnPressed: () {
+                        setState(() {
+                          _isVisible = !_isVisible;
+                        });
                       },
                     ),
-                    SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Text(
-                          'Don\'t remember your password?',
+                  ),
+                  SizedBox(height: 15),
+                  SubmitButton(
+                    label: 'Login',
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontFamily: 'Noir',
+                      fontWeight: FontWeight.bold,
+                    ),
+                    color: colorShade700,
+                    shadowColor: shadowColor900,
+                    onTap: () {
+                      print('Loging');
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Text(
+                        'Don\'t remember your password?',
+                        style: TextStyle(
+                          fontFamily: 'Reglo',
+                          fontSize: 12,
+                          color: colorShade800,
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      GestureDetector(
+                        onTap: () {
+                          print('Get help reset password');
+                        },
+                        child: Text(
+                          'Get Help',
                           style: TextStyle(
                             fontFamily: 'Reglo',
-                            fontSize: 12,
-                            color: colorShade800,
+                            fontSize: 15,
+                            color: colorShade900,
                           ),
                         ),
-                        SizedBox(width: 5),
-                        GestureDetector(
-                          onTap: () {
-                            print('Get help reset password');
-                          },
-                          child: Text(
-                            'Get Help',
-                            style: TextStyle(
-                              fontFamily: 'Reglo',
-                              fontSize: 15,
-                              color: colorShade900,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               )
             ],
           ),

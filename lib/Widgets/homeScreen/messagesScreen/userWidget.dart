@@ -1,5 +1,6 @@
 //importing packages
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 //importing theme
 import '../../../Themes/color/colorThemes.dart';
@@ -210,11 +211,11 @@ class UserWidget extends StatelessWidget with TimeDiffInString {
               ],
             ),
             SizedBox(height: 5),
-            Row(
-              children: [
-                FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: _buildText(
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  _buildText(
                     text:
                         'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...'
                                 .trim()
@@ -224,8 +225,8 @@ class UserWidget extends StatelessWidget with TimeDiffInString {
                     color: Colors.black,
                     fontSize: 12,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
@@ -236,10 +237,10 @@ class UserWidget extends StatelessWidget with TimeDiffInString {
   Text _buildText({String text, double fontSize, Color color}) {
     return Text(
       text,
-      style: TextStyle(
-        color: color,
-        fontFamily: 'Reglo',
+      style: GoogleFonts.nunito(
         fontSize: fontSize,
+        fontWeight: FontWeight.w800,
+        color: color,
       ),
     );
   }

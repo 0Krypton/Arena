@@ -1,5 +1,6 @@
 //importing packages
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 //importing widgets
 import '../../../Widgets/backButton.dart';
@@ -34,32 +35,38 @@ class _MessageScreenState extends State<MessageScreen> {
     {
       "imageUrl": "images/1Profile.jpg",
       'userName': 'krypton',
-      'message': 'Actually I\'m programming lot'
+      'message': 'Actually I\'m programming lot',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/2Profile.jpg",
       'userName': 'arena',
-      'message': 'Oh that\'s great congratulation 🎉🎊'
+      'message': 'Oh that\'s great congratulation 🎉🎊',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/1Profile.jpg",
       'userName': 'krypton',
-      'message': 'Thanks bro 🌹'
+      'message': 'Thanks bro 🌹',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/2Profile.jpg",
       'userName': 'arena',
-      'message': 'Ok bye 👋'
+      'message': 'Ok bye 👋',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/2Profile.jpg",
       'userName': 'arena',
-      'message': 'Ok bye 👋'
+      'message': 'Ok bye 👋',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/2Profile.jpg",
       'userName': 'arena',
-      'message': 'Ok bye 👋'
+      'message': 'Ok bye 👋',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
   ];
 
@@ -74,9 +81,36 @@ class _MessageScreenState extends State<MessageScreen> {
     final width = size.width;
     final height = size.height - padding;
 
+    //App bar
+    AppBar appBar = AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      centerTitle: true,
+      leading: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: backButton(
+          color: Colors.black,
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
+      title: Text(
+        '${widget.user['name']}',
+        style: GoogleFonts.nunito(
+          fontSize: 18,
+          fontWeight: FontWeight.w800,
+          color: Colors.black,
+          letterSpacing: 0.5,
+          wordSpacing: 0.5,
+        ),
+      ),
+    );
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
+        appBar: appBar,
         body: Container(
           height: height,
           width: width,
@@ -84,13 +118,8 @@ class _MessageScreenState extends State<MessageScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _buildAppBar(
-                  context: context,
-                  height: height * .1,
-                  width: width,
-                ),
                 _buildBody(
-                  height: height * .9,
+                  height: height - appBar.preferredSize.height,
                   width: width,
                 ),
               ],
@@ -118,13 +147,14 @@ class _MessageScreenState extends State<MessageScreen> {
       left: 20,
       child: AddMessageTextField(
         height: textFieldHeight,
-        callBack: (text) {
+        callBack: (text, line) {
           setState(() {
             messages.add(
               {
                 "imageUrl": "images/1Profile.jpg",
                 'userName': 'krypton',
                 'message': text.trim(),
+                'sentTime': DateTime.now().millisecondsSinceEpoch,
               },
             );
           });
@@ -171,32 +201,6 @@ class _MessageScreenState extends State<MessageScreen> {
             end: Alignment.topCenter,
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildAppBar({height, width, context}) {
-    return Container(
-      height: height,
-      width: width,
-      child: Row(
-        children: [
-          backButton(
-            color: Colors.black,
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          SizedBox(width: 15),
-          Text(
-            widget.user['name'],
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Reglo',
-              fontSize: 18,
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -32,6 +32,8 @@ dependencies:
   flare_flutter: ^2.0.6
   rive:
   dotted_border: ^1.0.7
+  google_fonts: ^1.1.2
+
 
 dev_dependencies:
   flutter_test:

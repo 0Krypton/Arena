@@ -809,7 +809,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
             onChanged: (v) {
               if (userNameController.text.trim().length > 0) {
                 userNameScaleAnimController.forward();
-                if (bioController.text.trim().length >= 4) {
+                if (userNameController.text.trim().length >= 4) {
                   userNameController.text.trim().padRight(1, v);
                 }
                 setState(() {});

@@ -1,6 +1,7 @@
 //importing packages
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 //importing widgets
 import '../../../Widgets/homeScreen/messagesScreen/userWidget.dart';
@@ -135,6 +136,15 @@ class _ContactsScreenState extends State<ContactsScreen> {
       child: Scaffold(
         appBar: AppBar(
           leading: _buildBackButton(context: context),
+          title: Text(
+            'Messages',
+            style: GoogleFonts.nunito(
+              fontSize: 18,
+              fontWeight: FontWeight.w800,
+              color: Colors.black,
+              letterSpacing: 1,
+            ),
+          ),
           backgroundColor: Colors.white,
           elevation: 0,
         ),
@@ -150,7 +160,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
               if (index == 0) {
                 return Column(
                   children: [
-                    SizedBox(height: 20),
+                    // SizedBox(height: 20),
                     _buildSearchTextField(width: size.width - 50),
                     SizedBox(height: 10),
                     _buildLineBreaker(width: size.width / 2),

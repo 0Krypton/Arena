@@ -43,66 +43,78 @@ class _MessageScreenState extends State<TourChatRoom> {
     {
       "imageUrl": "images/1Profile.jpg",
       'userName': 'krypton',
-      'message': 'Hello 🌹💖'
+      'message': 'Hello 🌹💖',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/1Profile.jpg",
       'userName': 'krypton',
-      'message': 'Neque porro quisquam est qui dolorem ipsum quia '
+      'message': 'Neque porro quisquam est qui dolorem ipsum quia ',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/1Profile.jpg",
       'userName': 'krypton',
-      'message': 'dolor sit amet, consectetur, adipisci velit...'
+      'message': 'dolor sit amet, consectetur, adipisci velit...',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/2Profile.jpg",
       'userName': 'clix',
-      'message': 'Hi there✋'
+      'message': 'Hi there✋',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/5Profile.jpg",
       'userName': 'hitman',
-      'message': 'Hi guys'
+      'message': 'Hi guys',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/2Profile.jpg",
       'userName': 'clix',
       'message':
-          'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...'
+          'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/2Profile.jpg",
       'userName': 'clix',
       'message':
-          'Mauris non luctus dolor. Vestibulum commodo iaculis justo sed fringilla😂. Donec in risus sit amet nisl ultrices auctor. '
+          'Mauris non luctus dolor. Vestibulum commodo iaculis justo sed fringilla😂. Donec in risus sit amet nisl ultrices auctor. ',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/4Profile.jpg",
       'userName': 'scorpion',
-      'message': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. A'
+      'message': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. A',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/2Profile.jpg",
       'userName': 'krypton',
       'message':
-          'Mauris non luctus dolor. Vestibulum commodo iaculis justo risus sit amet nisl ultrices auctor. '
+          'Mauris non luctus dolor. Vestibulum commodo iaculis justo risus sit amet nisl ultrices auctor. ',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/4Profile.jpg",
       'userName': 'scorpion',
-      'message': 'Lorem ipsum dolor, adipiscing elit.'
+      'message': 'Lorem ipsum dolor, adipiscing elit.',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/3Profile.jpg",
       'userName': 'hitman',
-      'message': 'Hi guys'
+      'message': 'Hi guys',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
     {
       "imageUrl": "images/1Profile.jpg",
       'userName': 'clix',
       'message':
-          'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...'
+          'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...',
+      'sentTime': DateTime.now().millisecondsSinceEpoch,
     },
   ];
 
@@ -119,18 +131,18 @@ class _MessageScreenState extends State<TourChatRoom> {
     super.initState();
     _chatListController = ScrollController();
     _chatListController.addListener(() {
-      double maxScroll = _chatListController.position.maxScrollExtent;
-      double currentScroll = _chatListController.position.pixels;
-      print(maxScroll - currentScroll);
-      if (maxScroll - currentScroll <= heightNeedToShow) {
-        setState(() {
-          _showScrollToBottom = true;
-        });
-      } else {
-        setState(() {
-          _showScrollToBottom = false;
-        });
-      }
+      // double maxScroll = _chatListController.position.maxScrollExtent;
+      // double currentScroll = _chatListController.position.pixels;
+      // print(maxScroll - currentScroll);
+      // if (maxScroll - currentScroll <= heightNeedToShow) {
+      //   setState(() {
+      //     _showScrollToBottom = true;
+      //   });
+      // } else {
+      //   setState(() {
+      //     _showScrollToBottom = false;
+      //   });
+      // }
     });
   }
 
@@ -224,8 +236,8 @@ class _MessageScreenState extends State<TourChatRoom> {
       children: [
         _buildChatList(height: height, width: width, messagesList: messages),
         _buildBottomHighlight(),
-        _buildTextField(),
         _buildAnimateToFirstButton(),
+        _buildTextField(),
       ],
     );
   }
@@ -264,20 +276,28 @@ class _MessageScreenState extends State<TourChatRoom> {
           : (-positionBTNScrollToBottom),
       right: 30,
       duration: const Duration(milliseconds: 300),
-      curve: Curves.bounceInOut,
+      curve: Curves.ease,
       child: GestureDetector(
         onTap: () {
           _chatListController.animateTo(
             0,
             duration: const Duration(milliseconds: 300),
-            curve: Curves.bounceInOut,
+            curve: Curves.ease,
           );
         },
         child: Container(
-          height: 40,
-          width: 40,
+          height: 35,
+          width: 35,
           decoration: BoxDecoration(
             color: colorShade700,
+            gradient: LinearGradient(
+              colors: [
+                const Color(0xFF74D7FF),
+                const Color(0xFF0088BF),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
             boxShadow: [
               BoxShadow(
                 color: colorShade700,
@@ -308,17 +328,21 @@ class _MessageScreenState extends State<TourChatRoom> {
       left: 20,
       child: AddMessageTextField(
         height: textFieldHeight,
-        callBack: (text) {
+        callBack: (text, totalLines) {
           setState(() {
             messages.add(
               {
                 "imageUrl": "images/1Profile.jpg",
                 'userName': 'krypton',
                 'message': text.trim(),
+                'sentTime': DateTime.now().millisecondsSinceEpoch,
               },
             );
+
             _chatListController.animateTo(
-              _chatListController.position.maxScrollExtent + 30,
+              _chatListController.position.maxScrollExtent +
+                  (totalLines * 30) +
+                  10,
               duration: const Duration(microseconds: 300),
               curve: Curves.ease,
             );
